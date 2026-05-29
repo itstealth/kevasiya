@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "categoryId": 3,
+    "name": "Sips and Savouries",
+    "slug": "sips-and-savouries",
+    "description": "A collection of tasty treats and drinks."
+  },
+  {
+    "id": 2,
+    "categoryId": 3,
+    "name": "Welcome to The Tribe!",
+    "slug": "welcome-to-the-tribe",
+    "description": "Perfect for onboarding new team members."
+  },
+  {
+    "id": 3,
+    "categoryId": 3,
+    "name": "Corporate Wellness Box",
+    "slug": "corporate-wellness-box",
+    "description": "Promote well-being and relaxation."
+  },
+  {
+    "id": 4,
+    "categoryId": 3,
+    "name": "Reward and Recognitions",
+    "slug": "reward-and-recognitions",
+    "description": "Appreciate and motivate your team."
+  }
+]

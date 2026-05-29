@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram Token Exchange - Kevasiya</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #3a5a40;
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+      select,
+      textarea,
+      button {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      textarea {
+        height: 100px;
+        resize: vertical;
+      }
+      button {
+        background-color: #e4405f;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #d63447;
+      }
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        white-space: pre-wrap;
+      }
+      .success {
+        background-color: #d4edda;
+        border-left: 4px solid #28a745;
+        color: #155724;
+      }
+      .error {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+        color: #721c24;
+      }
+      .instructions {
+        background-color: #e8f4f8;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        border-left: 4px solid #17a2b8;
+      }
+      .step {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔑 Instagram Token Exchange</h1>
+
+      <div class="instructions">
+        <h3>Instructions:</h3>
+        <div class="step">
+          1. Go to your
+          <a
+            href="https://developers.facebook.com/apps/2213328669135707/instagram-business/API-Setup/?business_id=887194423472801"
+            target="_blank"
+            >Meta Developer Dashboard</a
+          >
+        </div>
+        <div class="step">
+          2. Click "Generate token" next to the account you want to configure
+        </div>
+        <div class="step">3. Copy the short-lived token and paste it below</div>
+        <div class="step">
+          4. Select the account type and click "Exchange Token"
+        </div>
+        <div class="step">
+          5. The system will automatically convert it to a long-lived token (60
+          days)
+        </div>
+      </div>
+
+      <form id="tokenForm">
+        <div class="form-group">
+          <label for="accountType">Account Type:</label>
+          <select id="accountType" required>
+            <option value="">Select account type</option>
+            <option value="kevasiya_main">kevasiya.in (Main Account)</option>
+            <option value="kevasiya_corporate">
+              kevasiya_corporate (Corporate Account)
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="shortToken"
+            >Short-lived Token (from Meta Dashboard):</label
+          >
+          <textarea
+            id="shortToken"
+            placeholder="Paste your short-lived Instagram token here..."
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">🔄 Exchange Token</button>
+      </form>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("tokenForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submitBtn");
+          const resultDiv = document.getElementById("result");
+          const shortToken = document.getElementById("shortToken").value.trim();
+          const accountType = document.getElementById("accountType").value;
+
+          if (!shortToken || !accountType) {
+            showResult("error", "Please fill in all fields");
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "⏳ Exchanging Token...";
+          resultDiv.innerHTML = "";
+
+          try {
+            const response = await fetch("/api/instagram-exchange-token", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                short_lived_token: shortToken,
+                account_type: accountType,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+              showResult(
+                "success",
+                `✅ Success!\n\n` +
+                  `Account: ${accountType}\n` +
+                  `Long-lived token generated and cached.\n` +
+                  `Expires in: ${data.expires_in_days} days\n\n` +
+                  `Your Instagram feed should now work automatically!\n\n` +
+                  `Token: ${data.token.substring(0, 20)}...`
+              );
+
+              // Clear the form
+              document.getElementById("shortToken").value = "";
+              document.getElementById("accountType").value = "";
+            } else {
+              showResult(
+                "error",
+                `❌ Error: ${data.error}\n\n` +
+                  `Details: ${data.details || "No additional details"}`
+              );
+            }
+          } catch (error) {
+            showResult(
+              "error",
+              `❌ Network Error: ${error.message}\n\n` +
+                `Please make sure your backend server is running.`
+            );
+          }
+
+          submitBtn.disabled = false;
+          submitBtn.textContent = "🔄 Exchange Token";
+        });
+
+      function showResult(type, message) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.className = `result ${type}`;
+        resultDiv.textContent = message;
+      }
+    </script>
+  </body>
+</html>

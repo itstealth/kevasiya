@@ -1,0 +1,172 @@
+{
+  "siteUrl": "https://kevasiya.com",
+  "routes": [
+    {
+      "path": "/",
+      "title": "Luxury Hampers by Kevasiya for Wedding, Corporate, Festival & Kids",
+      "description": "Kevasiya offers premium hampers for weddings, corporate events, festivals and kids. Shop elegant gifts crafted with care for every special occasion.",
+      "keywords": "luxury hampers, wedding hampers, corporate gifts, festival hampers, baby hampers, premium gifts, kevasiya",
+      "canonical": "https://kevasiya.com/",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/collections/corporates",
+      "title": "Luxury Corporate gifting & Christmas Gifts | Premium Gifts for Clients",
+      "description": "Discover luxury employee reward gifts & premium corporate gifting ideas for clients. Explore Christmas gift hampers for employees & the best gifting solutions.",
+      "keywords": "corporate gifts, employee rewards, christmas gifts, premium corporate hampers, client gifts, kevasiya",
+      "canonical": "https://kevasiya.com/collections/corporates",
+      "ogImage": "/images/corporate/hero.png"
+    },
+    {
+      "path": "/corporates",
+      "title": "Corporate Anniversary Gifting & Premium Gift Ideas for Clients | Kevasiya",
+      "description": "Explore premium corporate gifting with Kevasiya – from employee anniversary gifts to onboarding gifts for new hires and work anniversary gifts for employees.",
+      "keywords": "corporate anniversary gifts, employee gifts, onboarding gifts, work anniversary, premium corporate hampers",
+      "canonical": "https://kevasiya.com/corporates",
+      "ogImage": "/images/corporate/hero.png"
+    },
+    {
+      "path": "/collections/festival",
+      "title": "Luxury Christmas & Diwali Gift Hampers | Premium Teej Gift Hamper",
+      "description": "Shop family Christmas gift hampers, holi gift hamper, Lohri & Ganesh Chaturthi gift hampers for every celebration. For premium Diwali hampers Call Us- 09310010810.",
+      "keywords": "festival hampers, diwali gifts, christmas hampers, holi gifts, teej hampers, ganesh chaturthi gifts",
+      "canonical": "https://kevasiya.com/collections/festival",
+      "ogImage": "/images/occasion/occasion.webp"
+    },
+    {
+      "path": "/festival",
+      "title": "Premium Corporate Diwali Gift Hampers & Holi Hampers Delhi",
+      "description": "Shop premium Diwali gift hampers in Delhi for corporate clients & employees. Explore exclusive Diwali hampers and vibrant Holi gifts today.",
+      "keywords": "diwali hampers delhi, corporate diwali gifts, holi hampers, premium festival gifts, delhi hampers",
+      "canonical": "https://kevasiya.com/festival",
+      "ogImage": "/images/occasion/occasion.webp"
+    },
+    {
+      "path": "/collections/wedding",
+      "title": "Luxury Wedding Hampers for Bride and Groom | Kevasiya",
+      "description": "Kevasiya offers luxury wedding gift hampers for bride, elegant & premium gift hampers for wedding anniversaries. Call Us-09310010810.",
+      "keywords": "wedding hampers, bride gifts, groom gifts, wedding anniversary gifts, luxury wedding hampers",
+      "canonical": "https://kevasiya.com/collections/wedding",
+      "ogImage": "/images/wedding/banner (1).jpg"
+    },
+    {
+      "path": "/wedding",
+      "title": "Luxury Wedding Gift Hampers for Bride and Groom & Return Favors",
+      "description": "Shop elegant newlywed gift hampers, wedding gifts for bride & groom, unique wedding anniversary gift ideas and thoughtful return favors for weddings.",
+      "keywords": "wedding gifts, newlywed hampers, wedding return favors, bride groom gifts, wedding anniversary",
+      "canonical": "https://kevasiya.com/wedding",
+      "ogImage": "/images/wedding/banner (1).jpg"
+    },
+    {
+      "path": "/collections/baby-hampers",
+      "title": "Children's Christmas Hampers | Newborn & Baby Shower Gifts Ideas",
+      "description": "Kevasiya brings new born gift hampers, gift items for mundan ceremony, pregnancy announcement to parents & baby announcement hampers. Call us at 09310010810.",
+      "keywords": "baby hampers, newborn gifts, baby shower gifts, mundan ceremony gifts, children hampers",
+      "canonical": "https://kevasiya.com/collections/baby-hampers",
+      "ogImage": "/images/home/occasions/baby.png"
+    },
+    {
+      "path": "/baby",
+      "title": "Birthday & Mundan Ceremony Gifts | Baby Announcement Gift Hampers",
+      "description": "Kevasiya offers birthday gifts for baby boys & girls, gifts for mundan ceremony, baby announcement cards, baby gift hampers & new born gift hampers.",
+      "keywords": "baby birthday gifts, mundan ceremony gifts, baby announcement, newborn hampers, baby gifts",
+      "canonical": "https://kevasiya.com/baby",
+      "ogImage": "/images/home/occasions/baby.png"
+    },
+    {
+      "path": "/about",
+      "title": "About Kevasiya | Luxury Gift Hampers & Premium Corporate Gifts",
+      "description": "Learn about Kevasiya – your trusted destination for luxury gift hampers, premium corporate gifts and elegant wedding, festival & kids hampers.",
+      "keywords": "about kevasiya, luxury hampers company, premium gifts, gift hamper specialists",
+      "canonical": "https://kevasiya.com/about",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/contact",
+      "title": "Get in Touch | Kevasiya Luxury Gift Hampers – 09310010810",
+      "description": "Get in touch with Kevasiya for luxury gift hampers, premium corporate gifts & festive hampers. Call Us @09310010810 today.",
+      "keywords": "contact kevasiya, luxury hampers contact, gift hamper inquiry, kevasiya phone number",
+      "canonical": "https://kevasiya.com/contact",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/privacy-policy",
+      "title": "Kevasiya | Privacy Policy for Hampers & Gift Services",
+      "description": "Kevasiya Privacy Policy – Learn how we safeguard your information and ensure secure shopping for luxury hampers & premium gift services.",
+      "keywords": "kevasiya privacy policy, data protection, secure shopping, privacy",
+      "canonical": "https://kevasiya.com/privacy-policy",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/terms-conditions",
+      "title": "Kevasiya | Terms & Conditions for Gift Hampers & Services",
+      "description": "Kevasiya Terms & Conditions – Read our terms of service for luxury hampers, corporate gifts and premium gift services.",
+      "keywords": "kevasiya terms conditions, gift hamper terms, service terms, kevasiya policies",
+      "canonical": "https://kevasiya.com/terms-conditions",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/collections",
+      "title": "All Collections | Luxury Gift Hampers by Kevasiya",
+      "description": "Explore all collections of luxury gift hampers by Kevasiya - from corporate gifts to wedding hampers, baby gifts and festival hampers.",
+      "keywords": "gift hamper collections, luxury hampers, kevasiya collections, premium gifts",
+      "canonical": "https://kevasiya.com/collections",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/collections/baby",
+      "title": "Baby Gift Hampers | Newborn & Baby Shower Gifts | Kevasiya",
+      "description": "Discover adorable baby gift hampers for newborns, baby showers, and special occasions. Kevasiya offers premium baby gifts for boys and girls.",
+      "keywords": "baby gift hampers, newborn gifts, baby shower hampers, baby boy gifts, baby girl gifts",
+      "canonical": "https://kevasiya.com/collections/baby",
+      "ogImage": "/images/home/occasions/baby.png"
+    },
+    {
+      "path": "/collections/wedding",
+      "title": "Wedding Gift Hampers | Bride & Groom Gifts | Kevasiya",
+      "description": "Find the perfect wedding gift hampers for brides, grooms, and wedding anniversaries. Kevasiya's luxury wedding hampers make every celebration special.",
+      "keywords": "wedding gift hampers, bride gifts, groom gifts, wedding anniversary, luxury wedding gifts",
+      "canonical": "https://kevasiya.com/collections/wedding",
+      "ogImage": "/images/wedding/banner (1).jpg"
+    },
+    {
+      "path": "/collections/festival",
+      "title": "Festival Gift Hampers | Diwali, Christmas & More | Kevasiya",
+      "description": "Celebrate every festival with Kevasiya's premium gift hampers. From Diwali to Christmas, find the perfect festive gifts for your loved ones.",
+      "keywords": "festival gift hampers, diwali hampers, christmas gifts, festive hampers, holiday gifts",
+      "canonical": "https://kevasiya.com/collections/festival",
+      "ogImage": "/images/occasion/occasion.webp"
+    },
+    {
+      "path": "/thank-you",
+      "title": "Thank You | Kevasiya - Message Received Successfully",
+      "description": "Thank you for contacting Kevasiya. Your message has been received and our team will get back to you within 24 hours.",
+      "keywords": "thank you, message received, contact confirmation, kevasiya response",
+      "canonical": "https://kevasiya.com/thank-you",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/blog",
+      "title": "Blog | Kevasiya - Luxury Gifting Tips & Ideas",
+      "description": "Discover luxury gifting tips, corporate gift ideas, wedding hampers, and baby shower gifts. Read our expert blog for the latest in premium gifting.",
+      "keywords": "luxury gifting blog, corporate gift ideas, wedding hampers, baby shower gifts, gift tips, kevasiya blog",
+      "canonical": "https://kevasiya.com/blog",
+      "ogImage": "/hero.webp"
+    },
+    {
+      "path": "/blog/[slug]",
+      "title": "Blog Post | Kevasiya - Luxury Gifting Tips & Ideas",
+      "description": "Read our latest blog post about luxury gifting, corporate gifts, and premium hampers. Expert tips and ideas from Kevasiya.",
+      "keywords": "luxury gifting blog post, corporate gift ideas, wedding hampers, baby shower gifts, gift tips",
+      "canonical": "https://kevasiya.com/blog",
+      "ogImage": "/hero.webp"
+    }
+  ],
+  "default": {
+    "title": "Kevasiya | Luxury Gift Hampers & Premium Corporate Gifts",
+    "description": "Kevasiya offers premium hampers for weddings, corporate events, festivals and kids. Shop elegant gifts crafted with care for every special occasion.",
+    "keywords": "kevasiya, luxury hampers, premium gifts, corporate gifts, wedding hampers",
+    "canonical": "https://kevasiya.com/",
+    "ogImage": "/hero.webp"
+  }
+}

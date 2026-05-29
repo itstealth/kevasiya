@@ -1,0 +1,173 @@
+networks:
+  kevasiya_network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.28.0.0/16
+  kevasiyacom_strapi_network:
+    external: true
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.secure
+    container_name: kevasiya_backend
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+    environment:
+    - NODE_ENV=production
+    - PORT=5001
+    - DB_HOST=db
+    - DB_USER=kevasiya_app
+    - DB_PASSWORD=${DB_PASSWORD}
+    - DB_NAME=kevasiya_db
+    - JWT_SECRET=${JWT_SECRET}
+    healthcheck:
+      interval: 30s
+      retries: 3
+      test:
+      - CMD
+      - wget
+      - -q
+      - --spider
+      - http://localhost:5001/api/health
+      timeout: 10s
+    networks:
+    - kevasiya_network
+    ports:
+    - 5006:5001
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /app/frontend/.next/cache:size=128m
+    - /tmp:size=64m
+    volumes:
+    - ./backend/uploads:/app/uploads
+
+  db:
+    container_name: kevasiya_db
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_DATABASE=kevasiya_db
+    - MYSQL_USER=kevasiya_app
+    - MYSQL_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 30s
+      test:
+      - CMD
+      - mysqladmin
+      - ping
+      - -h
+      - localhost
+      - -u
+      - root
+      - -p${MYSQL_ROOT_PASSWORD}
+      timeout: 10s
+    image: mysql:8.0
+    networks:
+    - kevasiya_network
+    read_only: false
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    volumes:
+    - mysql_data:/var/lib/mysql
+    - ./mysql/conf.d:/etc/mysql/conf.d:ro
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.secure
+    command:
+    - node
+    - server.js
+    container_name: kevasiya_frontend
+    working_dir: /app/frontend
+    volumes:
+      - ./backend/uploads:/app/frontend/public/uploads:ro
+    environment:
+    - NODE_ENV=production
+    - HOSTNAME=0.0.0.0
+    - PORT=5001
+    - NEXT_PUBLIC_API_URL=/api
+    - NEXT_PUBLIC_STRAPI_API_URL=http://strapi.kevasiya.com
+    - INTERNAL_API_URL=http://backend:5001
+    healthcheck:
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      test:
+      - CMD
+      - wget
+      - -q
+      - --spider
+      - http://127.0.0.1:5001/
+      timeout: 10s
+    extra_hosts:
+      - "strapi.kevasiya.com:172.29.0.4"
+    networks:
+    - kevasiya_network
+    - kevasiyacom_strapi_network
+    ports:
+    - 3016:5001
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /app/frontend/.next/cache:size=128m
+    - /tmp:size=64m
+
+  nginx:
+    container_name: kevasiya_nginx
+    depends_on:
+    - frontend
+    - backend
+    healthcheck:
+      interval: 30s
+      retries: 3
+      test:
+      - CMD
+      - wget
+      - -q
+      - --spider
+      - http://localhost/health
+      timeout: 10s
+    image: nginx:alpine
+    networks:
+    - kevasiya_network
+    ports:
+    - 8089:80
+    - 4439:443
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /app/frontend/.next/cache:size=128m
+    - /var/cache/nginx:size=32m
+    - /var/run:size=8m
+    volumes:
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./nginx/ssl:/etc/nginx/ssl:ro
+    - ./backend/uploads:/var/www/uploads:ro
+
+volumes:
+  mysql_data:
+    driver: local

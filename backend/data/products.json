@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "subCategoryId": 1,
+    "name": "Sips and Savouries Hamper",
+    "slug": "sips-and-savouries-hamper",
+    "description": "A delightful collection of premium sips and savoury snacks, perfect for any occasion that calls for a touch of elegance and flavour.",
+    "price": "Price on request",
+    "included_items": [
+      "Marshall Willen, Portable Bluetooth Speaker (Cream)",
+      "Weekly Planner (9.5 x 20.5 cms)",
+      "Brass Bookmark (with golden tassel)",
+      "Slived foiled Candle (Firangipani)",
+      "Parker Classic stainless steel pen",
+      "Assam Masala Chai Tea (100g)",
+      "Seasalt and California Almond vegan chocolate (2 minis) - 15g",
+      "Blue Tea Cup and Saucer set",
+      "Tea Infuser",
+      "Metal jars (150g Rose flavoured Almonds)",
+      "Metal jars (150g Peri-peri Cashews)"
+    ],
+    "packaging": "PACKAGING (all incl.)",
+    "image": "/images/products/sips-and-savouries-hamper.webp",
+    "images": [
+      "/images/products/sips-and-savouries-hamper.webp",
+      "/images/products/sips-and-savouries-hamper-2.webp",
+      "/images/products/sips-and-savouries-hamper-3.webp",
+      "/images/products/sips-and-savouries-hamper-4.webp",
+      "/images/products/sips-and-savouries-hamper-5.webp"
+    ]
+  },
+  {
+    "id": 2,
+    "subCategoryId": 2,
+    "name": "Welcome to the Tribe Hamper",
+    "slug": "welcome-to-the-tribe-hamper",
+    "description": "The perfect onboarding gift to make new team members feel valued and excited to start their journey with your company.",
+    "price": "Price on request",
+    "included_items": [],
+    "packaging": "PACKAGING (all incl.)",
+    "image": "/images/products/welcome-to-the-tribe-hamper.webp",
+    "images": ["/images/products/welcome-to-the-tribe-hamper.webp"]
+  }
+]

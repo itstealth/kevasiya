@@ -1,0 +1,49 @@
+{
+  "name": "strapi-kevasiya-cms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "strapi build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+  },
+  "dependencies": {
+    "@casl/ability": "^6.7.5",
+    "@strapi/plugin-cloud": "^5.39.0",
+    "@strapi/plugin-users-permissions": "^5.39.0",
+    "@strapi/strapi": "^5.39.0",
+    "axios": "^1.13.5",
+    "koa": "^3.1.2",
+    "minimatch": "^10.2.1",
+    "mysql2": "3.16.1",
+    "next": "^16.1.6",
+    "qs": "^6.14.2",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.12.0",
+    "rollup": "^4.59.0",
+    "serialize-javascript": "^7.0.3",
+    "styled-components": "^6.3.8",
+    "tar": "^7.5.11",
+    "undici": "^7.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "8155d275-0e17-4f20-8edf-edf09a7e36c8",
+    "installId": "2bde86652ab5f463fa5bd97e2ea1df06ce7ddd29aaa7f3f0d24d14fda85e8157"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "postcss": "^8.5.6"
+  }
+}

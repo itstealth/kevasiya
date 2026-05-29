@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Baby",
+    "slug": "baby",
+    "description": "Charming gifts for the little ones."
+  },
+  {
+    "id": 2,
+    "name": "Wedding",
+    "slug": "wedding",
+    "description": "Elegant hampers for the special day."
+  },
+  {
+    "id": 3,
+    "name": "Corporates",
+    "slug": "corporates",
+    "description": "Sophisticated gifts for clients and colleagues."
+  },
+  {
+    "id": 4,
+    "name": "Occasions",
+    "slug": "occasions",
+    "description": "Thoughtful hampers for every celebration."
+  }
+]
