@@ -1,13 +1,9 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
-import ProductDetailsClient from "./product-details-client";
-import { Product } from "@/types/product";
+import { Metadata } from "next";
 import { getApiUrl } from "@/lib/utils";
-import WhatsAppCTA from "@/components/ui/whatsapp-cta";
-import ContactDock from "@/app/corporates/components/ContactDock";
-import PopupQueryForm from "@/app/corporates/components/PopupQueryForm";
+import { Product } from "@/types/product";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import ProductPageClient from "./ProductPageClient";
 
 interface ApiProduct {
   id: number;
@@ -26,132 +22,85 @@ interface ApiProduct {
 }
 
 const slugify = (text: string) =>
-  text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+  text.toString().toLowerCase()
+    .replace(/\s+/g, "-").replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
 
-export default function ProductPage({
+async function getProduct(slug: string): Promise<Product | null> {
+  try {
+    const res = await fetch(`${getApiUrl()}/products?slug=${slug}`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    const products: ApiProduct[] = await res.json();
+    if (!products || products.length === 0) return null;
+
+    const p = products[0];
+    return {
+      id: p.id,
+      name: p.name,
+      slug: p.slug,
+      description: p.description,
+      price: p.price,
+      included_items: p.included_items,
+      packaging: p.packaging,
+      image: p.image,
+      images: p.images,
+      thumbnail: p.image,
+      category: { id: p.category_id, name: p.category_name, slug: slugify(p.category_name) },
+      subcategory: p.subcategory_id && p.subcategory_name
+        ? { id: p.subcategory_id, name: p.subcategory_name, slug: slugify(p.subcategory_name), category_id: p.category_id }
+        : null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+  if (!product) return {};
+
+  const title = `${product.name} | Kevasiya`;
+  const canonical = `https://kevasiya.com/products/${slug}`;
+
+  return {
+    title,
+    description: product.description || `Shop ${product.name} – a premium gift hamper by Kevasiya.`,
+    alternates: { canonical },
+    openGraph: { title, url: canonical, siteName: "Kevasiya" },
+  };
+}
+
+export default async function ProductPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isQueryOpen, setIsQueryOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [notFoundPage, setNotFoundPage] = useState(false);
+  const { slug } = await params;
+  const product = await getProduct(slug);
+  if (!product) notFound();
 
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const { slug } = await params;
-        const res = await fetch(`${getApiUrl()}/products?slug=${slug}`);
-
-        if (!res.ok) {
-          console.error(`API Error: ${res.status} ${res.statusText}`);
-          setNotFoundPage(true);
-          setLoading(false);
-          return;
-        }
-
-        const products: ApiProduct[] = await res.json();
-        if (!products || products.length === 0) {
-          setNotFoundPage(true);
-          setLoading(false);
-          return;
-        }
-
-        const p = products[0];
-        const subcategory =
-          p.subcategory_id && p.subcategory_name
-            ? {
-                id: p.subcategory_id,
-                name: p.subcategory_name,
-                slug: slugify(p.subcategory_name),
-                category_id: p.category_id,
-              }
-            : null;
-
-        const productData: Product = {
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          description: p.description,
-          price: p.price,
-          included_items: p.included_items,
-          packaging: p.packaging,
-          image: p.image,
-          images: p.images,
-          thumbnail: p.image,
-          category: {
-            id: p.category_id,
-            name: p.category_name,
-            slug: slugify(p.category_name),
-          },
-          subcategory: subcategory,
-        };
-
-        setProduct(productData);
-        setLoading(false);
-      } catch (error) {
-        console.error("Fetch Error:", error);
-        setNotFoundPage(true);
-        setLoading(false);
-      }
-    }
-
-    fetchProduct();
-  }, [params]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  if (notFoundPage || !product) {
-    notFound();
-  }
+  const breadcrumbItems = [
+    { label: "Collections", href: "/collections" },
+    { label: product.category.name, href: `/collections/${product.category.slug}` },
+    ...(product.subcategory
+      ? [{ label: product.subcategory.name, href: `/collections/${product.category.slug}/${product.subcategory.slug}` }]
+      : []),
+    { label: product.name },
+  ];
 
   return (
     <>
-      <ProductDetailsClient product={product} />
-      {/* Desktop WhatsApp CTA */}
-      <div className="hidden sm:hidden">
-        <WhatsAppCTA
-          message={`Hello! I'm interested in your ${product.name} product. Can you help me?`}
-        />
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-0 bg-gray-50">
+        <Breadcrumb items={breadcrumbItems} />
       </div>
-
-      <ContactDock
-        onContactClick={() => setIsQueryOpen(true)}
-        whatsappMessage={`Hello! I'm interested in your ${product.name} product. Can you help me?`}
-      />
-      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
+      <ProductPageClient product={product} />
     </>
   );
 }
-
-// This function helps Next.js generate static pages at build time.
-// By commenting it out, we make the pages dynamic, which fixes build-time data fetching issues.
-// export async function generateStaticParams() {
-//   try {
-//     const res = await fetch(`${getApiUrl()}/products`);
-//     if (!res.ok) return [];
-//
-//     const products: Product[] = await res.json();
-//
-//     return products.map((product) => ({
-//       slug: product.slug,
-//     }));
-//   } catch (error) {
-//     console.error("Could not generate static params for products:", error);
-//     return [];
-//   }
-// }

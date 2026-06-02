@@ -8,7 +8,11 @@ const nextConfig = {
       {
         source: "/api/:path*",
         destination: `${internalApiUrl}/api/:path*`,
-      }
+      },
+      {
+        source: "/uploads/:path*",
+        destination: `${internalApiUrl}/uploads/:path*`,
+      },
     ];
   },
 
@@ -38,11 +42,23 @@ const nextConfig = {
         pathname: "/uploads/**",
       },
       {
-    protocol: "http",
-    hostname: "57.128.189.225",
-    port: "5001",
-    pathname: "/uploads/**",
-  }
+        protocol: "http",
+        hostname: "57.128.189.225",
+        port: "5001",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "http",
+        hostname: "100.66.61.11",
+        port: "5006",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "http",
+        hostname: "100.66.61.11",
+        port: "1337",
+        pathname: "/**",
+      }
     ],
   },
 };

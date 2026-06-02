@@ -1,8 +1,11 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getApiUrl } from "@/lib/utils";
+import { getMetadataForRoute } from "@/lib/metadata";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface Product {
   id: number;
@@ -24,6 +27,15 @@ interface Category {
   name: string;
   slug: string;
   description: string;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}): Promise<Metadata> {
+  const { category } = await params;
+  return getMetadataForRoute(`/collections/${category}`);
 }
 
 async function getCategoryPageData(categorySlug: string) {
@@ -94,6 +106,15 @@ export default async function CategoryPage({
   return (
     <div className="bg-white">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: "Collections", href: "/collections" },
+              { label: category.name },
+            ]}
+          />
+        </div>
+
         <div className="text-center mt-10">
 
         {category.name == "Corporates" && (

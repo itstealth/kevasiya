@@ -44,17 +44,6 @@ export default function ProductDetailsClient({
   return (
     <div className="bg-gray-50 text-gray-800 sm:py-32 pt-32 pb-10">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-sm mb-8">
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>
-          <span className="mx-2">/</span>
-          <Link href="/collections" className="hover:underline">
-            Collections
-          </Link>
-          <span className="mx-2">/</span>
-          <span className="font-medium text-gray-500">{product.name}</span>
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {/* Image Gallery */}
           <div className="w-full">
