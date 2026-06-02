@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { cn } from "../../lib/utils";
 
 export default function Marquee({
@@ -9,17 +10,21 @@ export default function Marquee({
   repeat = 4,
   ...props
 }) {
+  const [isPaused, setIsPaused] = useState(false);
+
   return (
     <div
       {...props}
       className={cn(
-        "group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)]",
+        "flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)]",
         {
           "flex-row": !vertical,
           "flex-col": vertical,
         },
         className
       )}
+      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
+      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {Array(repeat)
         .fill(0)
@@ -31,8 +36,10 @@ export default function Marquee({
               "animate-marquee-reverse flex-row": !vertical && reverse,
               "animate-marquee-vertical flex-col": vertical && !reverse,
               "animate-marquee-vertical-reverse flex-col": vertical && reverse,
-              "group-hover:[animation-play-state:paused]": pauseOnHover,
             })}
+            style={{
+              animationPlayState: isPaused ? "paused" : "running",
+            }}
           >
             {children}
           </div>

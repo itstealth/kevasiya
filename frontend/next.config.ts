@@ -12,6 +12,7 @@ const nextConfig = {
     ];
   },
 
+
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -35,7 +36,13 @@ const nextConfig = {
         protocol: "https",
         hostname: "kevasiya.com",
         pathname: "/uploads/**",
-      }
+      },
+      {
+    protocol: "http",
+    hostname: "57.128.189.225",
+    port: "5001",
+    pathname: "/uploads/**",
+  }
     ],
   },
 };

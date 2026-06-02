@@ -76,7 +76,7 @@ const WhyKevasiya: React.FC = () => {
   };
 
   return (
-    <section className="-mt-[4rem] sm:-mt-[12rem] pb-10 md:py-24 bg-white text-gray-900">
+    <section className="pt-16 md:pt-24 pb-10 md:pb-24 bg-white text-gray-900">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Animated Heading */}
         <motion.div

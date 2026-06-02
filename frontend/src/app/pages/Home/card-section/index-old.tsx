@@ -244,7 +244,7 @@ export default function CardSection() {
             className={`cursor-pointer ${card.className}`}
           >
             <motion.div
-              animate={getFloatingAnimation(index)}
+              // animate={getFloatingAnimation(index)}
               style={{ display: "block" }}
             >
               <AnimatedCard {...card} className=" h-[450px]" />

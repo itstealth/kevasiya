@@ -20,7 +20,7 @@ const faqData = [
       "Our core value is personalized, versatile creativity, such as embroidery, printing, embossing, screen printing, and engraving. Apart from that, we can acquire greeting cards & create the packaging that reflects your company.",
   },
   {
-    question: "What will be the exact quantity of the order at Kesvasiya?",
+    question: "What will be the exact quantity of the order at Kevasiya?",
     answer:
       "Well, the exact quantity will depend on which type of gifts you have selected, whether it is a properly customized hamper or you have just selected a readymade hamper. Basically, that customization hampers acquiring more often.",
   },
@@ -45,7 +45,7 @@ const faqData = [
       "Yes, it is quite necessary to create an account. It would hardly take 5 minutes. With a registered account, creating your own custom wishlist and order history will become more convenient, and you will enjoy preview access to our finest collection.",
   },
   {
-    question: "Shall I place the order on call at Kevasia?",
+    question: "Shall I place the order on call at Kevasiya?",
     answer:
       "No, you cannot place the order via call; you may only get assistance on call about placing the bulk order. Moreover. If you get stuck anywhere on our website. You can call this number, +91 9220229789, but orders are placed on the website itself.",
   },

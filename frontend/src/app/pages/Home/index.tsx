@@ -16,7 +16,6 @@ const SpecialOccasions = dynamic(() => import("./special-occasions"));
 const WhyKevasiya = dynamic(() => import("./why-kevasiya"));
 const TrendingCarousel = dynamic(() => import("./b2b-cards"));
 // const OurProcessStepper = dynamic(() => import("./how-we-work"));
-const InstagramFeeds = dynamic(() => import("./InstagramFeeds"));
 
 const icons = [
   { src: "/images/home/logos/logo (1).png", alt: "logo 1" },
@@ -44,9 +43,6 @@ export default function Home({
       <TrendingCarousel initialProducts={trendingProducts} />
       <ClientsSlider icons={icons} />
       {/* <OurProcessStepper /> */}
-
-      {/* kevasiya instagram feeds*/}
-      <InstagramFeeds />
       <SpecialOccasions />
       <WhyKevasiya />
 

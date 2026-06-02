@@ -3,12 +3,11 @@
 import type React from "react";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { FaArrowRight, FaShoppingBag } from "react-icons/fa";
-import Lenis from "lenis";
+import { motion } from "framer-motion";
+import { FaShoppingBag } from "react-icons/fa";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Marquee from "@/components/ui/marquee";
 
 interface Occasion {
   id: string;
@@ -85,30 +84,12 @@ const colors = {
 
 const OccasionCard = ({
   occasion,
-  index,
-  scrollYProgress,
-  total,
 }: {
   occasion: Occasion;
-  index: number;
-  scrollYProgress: MotionValue<number>;
-  total: number;
 }) => {
-  // const IconComponent = occasion.icon;
-
-  const start = index / total;
-  const end = (index + 1) / total;
-  const itemProgress = useTransform(scrollYProgress, [start, end], [0, 0.3]);
-  const iconScale = useTransform(itemProgress, [0, 1], [0.6, 1.1]);
-  const descriptionOpacity = useTransform(itemProgress, [1, 1, 1], [0, 1, 1]);
-  const cardScale = useTransform(itemProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
-
   return (
-    <motion.li
-      style={{
-        scale: cardScale,
-      }}
-      className="h-[50vh] w-[50vw] flex flex-col justify-center items-center  overflow-hidden relative"
+    <motion.article
+      className="h-[60vh] w-screen md:h-[50vh] md:w-[50vw] flex flex-col justify-center items-center overflow-hidden relative shrink-0"
     >
       <Image
         src={occasion.image}
@@ -120,16 +101,7 @@ const OccasionCard = ({
       <div className="absolute inset-0 z-1 bg-black/30" />
 
       <div className="group text-center p-4 relative z-10 w-full flex flex-col items-center gap-4">
-        <motion.div
-          style={{ scale: iconScale }}
-          className="transition-transform duration-300 group-hover:scale-110"
-        >
-          {/* {IconComponent && (
-            <IconComponent
-              className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 mx-auto"
-              style={{ color: colors.textOnColor, x: titleX }}
-            />
-          )} */}
+        <motion.div className="transition-transform duration-300 group-hover:scale-110">
           <motion.div
             animate={{
               y: ["-3%", "3%"],
@@ -162,20 +134,13 @@ const OccasionCard = ({
           </motion.h3>
         </div>
 
-        <motion.p
-          style={{
-            opacity: descriptionOpacity,
-            color: colors.textOnColor,
-          }}
+        <p
+          style={{ color: colors.textOnColor }}
           className="text-base md:text-lg lg:text-xl max-w-sm md:max-w-md mx-auto leading-relaxed drop-shadow-md"
         >
           {occasion.description}
-        </motion.p>
-        <motion.div
-          style={{
-            opacity: descriptionOpacity,
-          }}
-        >
+        </p>
+        <div>
           <Button
             variant="outline"
             size="lg"
@@ -184,169 +149,24 @@ const OccasionCard = ({
           >
             <Link href={occasion.href}>
               Shop Now
-              <FaShoppingBag className="ml-2 h-5 w-5 mt-0.5 transition-transform duration-300 group-hover/button:translate-x-1 group-hover/" />
-            </Link>
-          </Button>
-        </motion.div>
-      </div>
-    </motion.li>
-  );
-};
-
-interface MobileOccasionCardProps {
-  occasion: Occasion;
-  index: number;
-  progress: MotionValue<number>;
-  range: [number, number];
-  targetScale: number;
-}
-
-const MobileOccasionCard = ({
-  occasion,
-  index,
-  progress,
-  range,
-  targetScale,
-}: MobileOccasionCardProps) => {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "start start"],
-  });
-
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
-  const scale = useTransform(progress, range, [1, targetScale]);
-
-  return (
-    <div
-      ref={container}
-      className="h-screen  flex items-center justify-center sticky top-0"
-    >
-      <motion.div
-        style={{
-          scale,
-          top: `calc(-5vh + ${index * 25}px)`,
-        }}
-        className="relative -top-[25%] h-[60vh] w-full overflow-hidden flex flex-col justify-center items-center text-center p-4 rounded-lg origin-top"
-      >
-        <motion.div
-          className="absolute inset-0 z-0"
-          style={{ scale: imageScale }}
-        >
-          <Image
-            src={occasion.image}
-            alt={occasion.name}
-            fill
-            className="object-cover filter blur-sm"
-          />
-        </motion.div>
-        <div className="absolute inset-0 z-1 bg-black/30" />
-        <div className="relative z-10 flex flex-col items-center text-white">
-          <motion.div
-            animate={{ y: ["-3%", "3%"] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          >
-            <Image
-              src={occasion.iconImage}
-              alt={`${occasion.name} icon`}
-              width={192}
-              height={192}
-              className="w-48 h-48 mb-4"
-            />
-          </motion.div>
-          <h3 className="text-3xl font-extrabold mb-2">{occasion.name}</h3>
-          <p className="max-w-xs text-lg mb-6">{occasion.description}</p>
-          <Button
-            variant="outline"
-            size="lg"
-            className="bg-transparent border-white text-white hover:bg-white hover:text-slate-900"
-            asChild
-          >
-            <Link href={occasion.href}>
-              Shop Now <FaArrowRight className="ml-2 h-4 w-4" />
+              <span className="ml-2 mt-0.5 transition-transform duration-300 group-hover/button:translate-x-1">
+                <FaShoppingBag size={20} />
+              </span>
             </Link>
           </Button>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.article>
   );
 };
 
 const SpecialOccasions: React.FC = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const mobileContainerRef = useRef<HTMLDivElement>(null);
-  const [isDesktop, setIsDesktop] = useState(true);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 768); // Tailwind's 'md' breakpoint
-    };
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  // This progress tracker starts when the top of the container hits the top of the viewport.
-  // It will control the horizontal scrolling of the whole set of cards.
-  const { scrollYProgress: containerXScrollProgress } = useScroll({
-    target: isDesktop ? scrollContainerRef : undefined,
-    offset: ["start start", "end end"],
-  });
-
-  // This progress tracker starts when the top of the container hits the center of the viewport.
-  // It will be passed to each card to control its internal text animation.
-  const { scrollYProgress: cardAnimationProgress } = useScroll({
-    target: isDesktop ? scrollContainerRef : undefined,
-    offset: ["start center", "end center"],
-  });
-
-  // Mobile scroll progress for stacking effect
-  const { scrollYProgress: mobileScrollProgress } = useScroll({
-    target: isDesktop ? undefined : mobileContainerRef,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    if (!isDesktop) return;
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, [isDesktop]);
-
-  const totalWidth = occasionsData.length * 50;
-  const scrollDistance = Math.max(0, totalWidth - 100);
-
-  // Use the containerXScrollProgress for the horizontal movement of the <ul>
-  const x = useTransform(
-    containerXScrollProgress,
-    [0, 1],
-    ["0vw", `-${scrollDistance}vw`]
-  );
-
   return (
     <section
-      className="pt-12 md:pt-16 lg:pt-16"
+      className="pt-12 md:pt-16 lg:pt-16 pb-16 md:pb-24 overflow-hidden"
       style={{ backgroundColor: colors.background }}
     >
-      <div className="container -mb-28 sm:-mb-[12rem] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12 lg:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -385,47 +205,15 @@ const SpecialOccasions: React.FC = () => {
         </div>
       </div>
 
-      {isDesktop ? (
-        <div
-          ref={scrollContainerRef}
-          className="relative"
-          style={{ height: `${Math.ceil(occasionsData.length / 2) * 100}vh` }}
-        >
-          <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-            <motion.ul style={{ x }} className="flex">
-              {occasionsData.map((occasion, index) => (
-                <OccasionCard
-                  key={occasion.id}
-                  occasion={occasion}
-                  index={index}
-                  scrollYProgress={cardAnimationProgress}
-                  total={occasionsData.length}
-                />
-              ))}
-            </motion.ul>
-          </div>
-        </div>
-      ) : (
-        <div
-          ref={mobileContainerRef}
-          className="container min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-          style={{ height: `${occasionsData.length * 100}vh` }}
-        >
-          {occasionsData.map((occasion, index) => {
-            const targetScale = 1 - (occasionsData.length - index) * 0.05;
-            return (
-              <MobileOccasionCard
-                key={occasion.id}
-                occasion={occasion}
-                index={index}
-                progress={mobileScrollProgress}
-                range={[index * 0.25, 1]}
-                targetScale={targetScale}
-              />
-            );
-          })}
-        </div>
-      )}
+      <Marquee
+        pauseOnHover
+        repeat={2}
+        className="w-full [--gap:1.5rem] [--duration:28s] px-0 py-0"
+      >
+        {occasionsData.map((occasion) => (
+          <OccasionCard key={occasion.id} occasion={occasion} />
+        ))}
+      </Marquee>
     </section>
   );
 };

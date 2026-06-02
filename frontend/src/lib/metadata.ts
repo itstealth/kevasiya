@@ -20,34 +20,15 @@ export interface DefaultMetadata {
 
 export function getMetadataForRoute(pathname: string): Metadata {
   // Find exact match first
-  let routeData = metadataConfig.routes.find(
+  const routeData = metadataConfig.routes.find(
     (route) => route.path === pathname
   );
 
-  // If no exact match, try to find partial matches for dynamic routes
-  if (!routeData) {
-    routeData = metadataConfig.routes.find((route) => {
-      // Handle dynamic routes like /collections/[category]
-      if (
-        pathname.startsWith("/collections/") &&
-        route.path.startsWith("/collections/")
-      ) {
-        return true;
-      }
-      // Handle product pages
-      if (pathname.startsWith("/products/") && route.path === "/products") {
-        return true;
-      }
-      // Handle blog post pages
-      if (pathname.startsWith("/blog/") && route.path === "/blog/[slug]") {
-        return true;
-      }
-      return false;
-    });
-  }
-
   // Get the metadata (either from route or default)
   const metadata = routeData || metadataConfig.default;
+
+  // Use self-referencing canonical when no specific route metadata exists
+  const selfCanonical = `${metadataConfig.siteUrl}${pathname}`;
 
   return {
     title: metadata.title,
@@ -63,12 +44,12 @@ export function getMetadataForRoute(pathname: string): Metadata {
     },
     metadataBase: new URL(metadataConfig.siteUrl),
     alternates: {
-      canonical: metadata.canonical || `${metadataConfig.siteUrl}${pathname}`,
+      canonical: routeData ? metadata.canonical : selfCanonical,
     },
     openGraph: {
       title: metadata.title,
       description: metadata.description,
-      url: metadata.canonical || `${metadataConfig.siteUrl}${pathname}`,
+      url: routeData ? (metadata.canonical || selfCanonical) : selfCanonical,
       siteName: "Kevasiya",
       images: [
         {
