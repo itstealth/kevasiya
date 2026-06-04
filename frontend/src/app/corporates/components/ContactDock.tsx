@@ -12,7 +12,7 @@ interface ContactDockProps {
 
 const ContactDock: React.FC<ContactDockProps> = ({
   onContactClick,
-  phoneNumber = "919220229789",
+  phoneNumber = "919310010810",
   whatsappMessage = "Hello! I'm interested in your services. Can you help me?",
 }) => {
   return (

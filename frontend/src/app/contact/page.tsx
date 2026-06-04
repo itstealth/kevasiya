@@ -624,10 +624,10 @@ function ContactForm() {
                           Phone Number
                         </h4>
                         <a
-                          href="tel:+919220229789"
+                          href="tel:+919310010810"
                           className="text-gray-600 cursor-pointer"
                         >
-                          +91 9220229789
+                          +91 9310010810
                         </a>
                         <p className="text-sm text-gray-500">
                           Available 9 AM - 6 PM IST

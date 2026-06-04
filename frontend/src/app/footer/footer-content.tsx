@@ -194,7 +194,7 @@ export function FooterContent() {
                   </div>
                   <div className="flex items-center gap-3 hover:text-kevasiya-gold transition-colors duration-300">
                     <FiPhone className="w-5 h-5 flex-shrink-0" />
-                    <a href="tel:+919220229789">+91 9220229789</a>
+                    <a href="tel:+919310010810">+91 9310010810</a>
                   </div>
                   <div className="flex items-center gap-3 hover:text-kevasiya-gold transition-colors duration-300">
                     <FiMail className="w-5 h-5 flex-shrink-0" />

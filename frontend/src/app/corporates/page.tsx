@@ -40,7 +40,7 @@ export default function Home() {
       <FAQ />
       <div className="hidden sm:hidden">
         <WhatsAppCTA
-          phoneNumber="919220229789"
+          phoneNumber="919310010810"
           message="Hello! I'm interested in your corporate gifting services. Can you help me?"
         />
       </div>

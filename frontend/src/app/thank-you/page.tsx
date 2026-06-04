@@ -111,10 +111,10 @@ export default function ThankYouPage() {
               </p>
               <div className="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm">
                 <a
-                  href="tel:+919220229789"
+                  href="tel:+919310010810"
                   className="text-[#3A5A40] hover:text-[#3A5A40]/80 font-medium transition-colors"
                 >
-                  📞 +91 9220229789
+                  📞 +91 9310010810
                 </a>
                 <span className="hidden sm:block text-gray-300">|</span>
                 <a

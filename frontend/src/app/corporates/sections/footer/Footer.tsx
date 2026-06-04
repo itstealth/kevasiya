@@ -270,7 +270,7 @@ const Footer = () => {
                   </div>
                   <div className="flex items-center gap-3 text-white/80 hover:text-kevasiya-gold transition-colors duration-300">
                     <FiPhone className="w-5 h-5 flex-shrink-0" />
-                    <span>+91 9220229789 (Corporate Sales)</span>
+                    <span>+91 9310010810 (Corporate Sales)</span>
                   </div>
                   <div className="flex items-center gap-3 text-white/80 hover:text-kevasiya-gold transition-colors duration-300">
                     <FiMail className="w-5 h-5 flex-shrink-0" />

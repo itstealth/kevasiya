@@ -28,7 +28,7 @@ export default function ProductDetailsClient({
   );
 
   const whatsappUrl = useMemo(() => {
-    const phoneNumber = "919220229789";
+    const phoneNumber = "919310010810";
     const message = `Hello! I'm interested in your ${product.name} product. Can you help me?`;
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

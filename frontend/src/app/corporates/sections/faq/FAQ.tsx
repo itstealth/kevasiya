@@ -47,7 +47,7 @@ const faqData = [
   {
     question: "Shall I place the order on call at Kevasiya?",
     answer:
-      "No, you cannot place the order via call; you may only get assistance on call about placing the bulk order. Moreover. If you get stuck anywhere on our website. You can call this number, +91 9220229789, but orders are placed on the website itself.",
+      "No, you cannot place the order via call; you may only get assistance on call about placing the bulk order. Moreover. If you get stuck anywhere on our website. You can call this number, +91 9310010810, but orders are placed on the website itself.",
   },
 ];
 
