@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { BlogPost } from '@/types/strapi-blog';
 import { formatDate } from '@/lib/strapi';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface BlogPostHeaderProps {
   post: BlogPost;
@@ -19,21 +19,9 @@ export function BlogPostHeader({ post }: BlogPostHeaderProps) {
 
       <div className="relative max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <nav className="flex items-center space-x-2 text-sm text-white mb-6">
-          <Link href="/" className="hover:text-[#b99e85] transition-colors duration-200">
-            Home
-          </Link>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-          <Link href="/blog" className="hover:text-[#b99e85] transition-colors duration-200">
-            Blog
-          </Link>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-          <span className="text-white font-medium">Article</span>
-        </nav>
+        <div className="mb-6">
+          <Breadcrumb variant="dark" items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
+        </div>
 
         {/* Featured Image */}
         {post.featuredImage && (

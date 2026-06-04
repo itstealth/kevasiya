@@ -9,6 +9,7 @@ import Link from "next/link";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
 import PopupQueryForm from "../corporates/components/PopupQueryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 export default function AboutUs() {
   const ref = useRef(null);
@@ -54,6 +55,10 @@ export default function AboutUs() {
         className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
         ref={ref}
       >
+        <div className="mb-8">
+          <Breadcrumb items={[{ label: "About" }]} />
+        </div>
+
         {/* Main heading with typewriter effect */}
         <motion.div
           className="text-center mb-16 lg:mb-24"

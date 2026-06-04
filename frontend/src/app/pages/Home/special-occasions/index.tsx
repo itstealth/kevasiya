@@ -33,7 +33,7 @@ const occasionsData: Occasion[] = [
   {
     id: "anniversary",
     name: "ANNIVERSARY",
-    href: "/collections",
+    href: "/collections/anniversary",
     // icon: FaHeart,
     iconImage: "/images/home/occasions/heart.png",
     description:
@@ -43,7 +43,7 @@ const occasionsData: Occasion[] = [
   {
     id: "house-warming",
     name: "HOUSE WARMING",
-    href: "/collections",
+    href: "/collections/house-warming",
     // icon: FaHome,
     iconImage: "/images/home/occasions/home.png",
     description:
@@ -63,7 +63,7 @@ const occasionsData: Occasion[] = [
   {
     id: "special-gifts",
     name: "FESTIVAL",
-    href: "/collections",
+    href: "/festival",
     // icon: FaGift,
     iconImage: "/images/home/occasions/festival.png",
     description:

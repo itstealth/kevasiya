@@ -7,6 +7,7 @@ import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import GiftCategories from "./sections/giftcategories/GiftCategories";
 import PopupQueryForm from "./components/PopupQueryForm";
 import ContactDock from "./components/ContactDock";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 const InstagramFeedsCorporate = dynamic(
   () => import("./sections/instagram-feeds/InstagramFeedsCorporate")
@@ -25,8 +26,10 @@ export default function Home() {
   const [isQueryOpen, setIsQueryOpen] = useState(false);
   return (
     <section className="overflow-hidden">
-      {/* <Header /> */}
       <Hero />
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-0">
+        <Breadcrumb items={[{ label: "Corporate Gifts" }]} />
+      </div>
       <GiftCategories />
       <GiftOcassion />
       {/* <SeasonalGift /> */}

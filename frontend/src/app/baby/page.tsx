@@ -10,6 +10,7 @@ import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
 import PopupQueryForm from "../corporates/components/PopupQueryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 // --- Data Types ---
 interface Subcategory {
@@ -115,6 +116,9 @@ export default function BabyAnnouncementPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white">
       <HeroSection />
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-0">
+        <Breadcrumb items={[{ label: "Baby Hampers" }]} />
+      </div>
       <ProductListSection products={randomProducts} />
       <BestChoicesSection subcategories={subcategories} category={category} />
       <TestimonialsSection />

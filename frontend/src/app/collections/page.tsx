@@ -6,6 +6,7 @@ import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
 import PopupQueryForm from "../corporates/components/PopupQueryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface Collection {
   id: number;
@@ -52,6 +53,9 @@ export default function CollectionsPage() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 mt-10  py-24 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div className="mb-6">
+          <Breadcrumb items={[{ label: "Collections" }]} />
+        </div>
         <div className="text-center">
           <h2 className="text-4xl font-bold tracking-tight text-green-900 sm:text-5xl font-serif">
             Our Collections

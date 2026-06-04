@@ -3,6 +3,7 @@ import { fetchStrapiBlogPosts } from '@/lib/strapi';
 import { BlogCard } from './components/BlogCard';
 import { BlogPagination } from './components/BlogPagination';
 import { BlogHero } from './components/BlogHero';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface BlogPageProps {
   searchParams: Promise<{
@@ -50,6 +51,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-2">
+        <Breadcrumb items={[{ label: "Blog" }]} />
+      </div>
       {/* Hero Section */}
       <BlogHero totalPosts={totalPosts} />
 

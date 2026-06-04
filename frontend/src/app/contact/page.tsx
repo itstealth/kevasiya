@@ -27,6 +27,7 @@ import { getApiUrl, extractUTMParams } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
 import PopupQueryForm from "../corporates/components/PopupQueryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface FormData {
   firstName: string;
@@ -296,6 +297,10 @@ function ContactForm() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-0">
+        <Breadcrumb items={[{ label: "Contact" }]} />
+      </div>
 
       {/* Main Content Section */}
       <section className="py-20 lg:py-32">
@@ -711,53 +716,20 @@ function ContactForm() {
             </p>
           </div>
 
-          <Card className="shadow-2xl border-0 bg-whit overflow-hidden py-0">
+          <Card className="shadow-2xl border-0 overflow-hidden py-0">
             <CardContent className="p-0">
-              <div className="relative h-96 bg-gradient-to-br from-[#3A5A40]/10 to-[#AE8F65]/10">
+              <div className="h-[480px]">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.562977189838!2d77.12609107529067!3d28.672801375642848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d031290a1aa77%3A0x444d63f308de1f5b!2sKevasiya!5e0!3m2!1sen!2sin!4v1750769709987!5m2!1sen!2sin"
-                  width="600"
-                  height="450"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
                   loading="lazy"
-                  className="w-full h-full absolute top-0 left-0 -z-1"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Kevasiya office location"
+                  className="w-full h-full"
                 ></iframe>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-6">
-                    <div className="w-20 h-20 bg-[#3A5A40]/10 rounded-full flex items-center justify-center mx-auto">
-                      <MapPin className="w-10 h-10 text-[#3A5A40]" />
-                    </div>
-                    <div className="space-y-3">
-                      <h4 className="text-2xl font-bold text-[#3A5A40]">
-                        Interactive Map
-                      </h4>
-                      <p className="text-gray-600 max-w-md mx-auto">
-                        Click below to view our exact location and get
-                        directions via Google Maps
-                      </p>
-                    </div>
-                    <a
-                      href="https://maps.app.goo.gl/KvrAG625XLWk3eCC9"
-                      target="_blank"
-                    >
-                      <Button
-                        size="lg"
-                        className="bg-[#3A5A40] hover:bg-[#3A5A40]/90 text-white shadow-lg hover:cursor-pointer relative z-10"
-                      >
-                        <MapPin className="w-5 h-5 mr-2" />
-                        Open in Google Maps
-                      </Button>
-                    </a>
-                  </div>
-                </div>
-                {/* Decorative map-like elements */}
-                <div className="absolute inset-0 z-0 opacity-20">
-                  <div className="absolute top-8 left-8 w-3 h-3 bg-[#3A5A40] rounded-full"></div>
-                  <div className="absolute top-12 right-12 w-2 h-2 bg-[#AE8F65] rounded-full"></div>
-                  <div className="absolute bottom-16 left-16 w-4 h-4 bg-[#3A5A40] rounded-full"></div>
-                  <div className="absolute bottom-8 right-8 w-3 h-3 bg-[#AE8F65] rounded-full"></div>
-                  <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-[#3A5A40] rounded-full"></div>
-                  <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-[#AE8F65] rounded-full"></div>
-                </div>
               </div>
             </CardContent>
           </Card>

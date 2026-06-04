@@ -82,7 +82,60 @@ async function getFeaturedProducts(): Promise<TrendingProduct[]> {
   }
 }
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Kevasiya",
+  image: "https://kevasiya.com/logo.png",
+  url: "https://kevasiya.com",
+  telephone: "+91-9310010810",
+  email: "info@kevasiya.com",
+  priceRange: "₹₹₹",
+  description:
+    "Premium luxury gift hampers for weddings, corporate events, festivals and baby occasions in Delhi NCR. Custom hampers crafted with care for every special occasion.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "52 North Avenue Road, West Punjabi Bagh",
+    addressLocality: "New Delhi",
+    addressRegion: "Delhi",
+    postalCode: "110026",
+    addressCountry: "IN",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 28.672801,
+    longitude: 77.126091,
+  },
+  areaServed: [
+    { "@type": "City", name: "New Delhi" },
+    { "@type": "City", name: "Gurgaon" },
+    { "@type": "City", name: "Noida" },
+    { "@type": "City", name: "Faridabad" },
+    { "@type": "City", name: "Ghaziabad" },
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "10:00",
+      closes: "19:00",
+    },
+  ],
+  hasMap: "https://maps.app.goo.gl/KvrAG625XLWk3eCC9",
+  sameAs: [
+    "https://www.instagram.com/kevasiya",
+  ],
+};
+
 export default async function Page() {
   const trendingProducts = await getFeaturedProducts();
-  return <Home trendingProducts={trendingProducts} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      <Home trendingProducts={trendingProducts} />
+    </>
+  );
 }

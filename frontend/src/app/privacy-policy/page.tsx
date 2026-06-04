@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 
 
@@ -9,6 +10,9 @@ const PrivacyPolicyPage = () => {
   return (
     <div className="bg-stone-50 font-sans">
       <div className="container mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:pt-36 lg:pb-20 lg:px-8">
+        <div className="mb-6">
+          <Breadcrumb items={[{ label: "Privacy Policy" }]} />
+        </div>
         <div className="bg-white p-8 shadow-md rounded-lg md:p-12">
           <div className="mb-10 text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">

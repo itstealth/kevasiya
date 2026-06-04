@@ -10,6 +10,7 @@ import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
 import PopupQueryForm from "../corporates/components/PopupQueryForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface Product {
   id: number;
@@ -72,6 +73,9 @@ export default function WeddingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-white">
       <HeroSection />
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-0">
+        <Breadcrumb items={[{ label: "Wedding Hampers" }]} />
+      </div>
       <ProductListSection products={products} />
       <BestChoicesSection />
       <TestimonialsSection />

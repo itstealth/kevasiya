@@ -302,12 +302,13 @@ export function FooterContent() {
                   {[
                     { name: "About Us", href: "/about" },
                     // { name: "Our Story", href: "/story" },
-                    // { name: "Blog", href: "/blog" },
+                    { name: "Blog", href: "/blog" },
                     { name: "Contact Us", href: "/contact" },
                     
                     // { name: "FAQs", href: "/" },
                     { name: "Privacy Policy", href: "/privacy-policy" },
                     { name: "Terms & Conditions", href: "/terms-conditions" },
+                    { name: "Return Policy", href: "/return-policy" },
                   ].map((item) => (
                     <li key={item.name}>
                       <Link
