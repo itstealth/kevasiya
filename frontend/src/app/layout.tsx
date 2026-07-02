@@ -47,6 +47,10 @@ export default function RootLayout({
           name="google-site-verification"
           content="Z1D8DnIGB1qz3ZIhMCPEZxgZWqLmlKWIB0bHPBRNZZM"
         />
+        <meta
+          name="google-site-verification"
+          content="TtjV-2UwCCDQXzXLCTn2whLJBDUQ2_kK6dD9nqO3B0I"
+        />
 
         {/* Structured Data */}
         <Script

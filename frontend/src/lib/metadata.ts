@@ -80,7 +80,10 @@ export function getMetadataForRoute(pathname: string): Metadata {
       },
     },
     verification: {
-      google: "Z1D8DnIGB1qz3ZIhMCPEZxgZWqLmlKWIB0bHPBRNZZM",
+      google: [
+        "Z1D8DnIGB1qz3ZIhMCPEZxgZWqLmlKWIB0bHPBRNZZM",
+        "TtjV-2UwCCDQXzXLCTn2whLJBDUQ2_kK6dD9nqO3B0I"
+      ],
     },
   };
 }

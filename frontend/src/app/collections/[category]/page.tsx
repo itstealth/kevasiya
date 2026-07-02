@@ -6,6 +6,33 @@ import { getApiUrl } from "@/lib/utils";
 import { getMetadataForRoute } from "@/lib/metadata";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import Accordion from "@/components/ui/Accordion";
+
+const CATEGORY_CONTENT_OVERLAY = {
+  corporates: {
+    name: "Corporate Gift Hampers",
+    subtext: "Sophisticated, premium gifting solutions for clients, employees, and every corporate occasion, curated by Kevasiya, delivered across India.",
+    description: "Kevasiya's corporate gift hampers are designed to make your brand unforgettable. Whether you're rewarding top performers, welcoming new hires, celebrating workanniversaries, or gifting valued clients each hamper is curated with premium products and presented in elegant, branded packaging. We handle bulk orders with ease and offer full personalisation including custom branding, logo printing, and tailored messaging. Trusted by businesses across Delhi NCR and India.",
+    faqs: [
+      {
+        question: "Do you accept bulk corporate gifting orders?",
+        answer: "Yes, we specialise in bulk orders for corporates. Reach out via the Enquiry form or WhatsApp for custom pricing."
+      },
+      {
+        question: "Can the hampers be branded with our company logo?",
+        answer: "Absolutely. We offer custom branding, logo printing on packaging, and personalised inserts."
+      },
+      {
+        question: "What occasions do your corporate hampers cover?",
+        answer: "We have curated collections for employee rewards, onboarding kits, work anniversaries, and special occasions."
+      },
+      {
+        question: "Do you deliver corporate hampers pan-India?",
+        answer: "Yes. We deliver across India with free shipping within Delhi NCR."
+      }
+    ]
+  }
+};
 
 interface Product {
   id: number;
@@ -115,31 +142,24 @@ export default async function CategoryPage({
           />
         </div>
 
-        <div className="text-center mt-10">
+        {/* Custom display variables */}
+        {(() => {
+          const isCorporate = categorySlug === "corporates";
+          const customContent = isCorporate ? CATEGORY_CONTENT_OVERLAY.corporates : null;
+          const displayName = customContent ? customContent.name : category.name;
+          const displaySubtext = customContent ? customContent.subtext : (category.description || `Browse our exclusive selection of ${category.name.toLowerCase()} gift hampers.`);
 
-        {category.name == "Corporates" && (
-          <h1 className="sr-only">Corporate Gifts</h1>
-        )}
-        {category.name == "Festival" && (
-          <h1 className="sr-only">Festival Gifts</h1>
-        )}
-        {category.name == "Wedding" && (
-          <h1 className="sr-only">Wedding Gifts</h1>
-        )}
-        {category.name == "Baby Hampers" && (
-          <h1 className="sr-only">Baby Gifts</h1>
-        )}
-
-
-
-          <h2 className="text-4xl font-serif text-[#B38463] sm:text-5xl">
-            {category.name}
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-            {category.description ||
-              `Browse our exclusive selection of ${category.name.toLowerCase()} gift hampers.`}
-          </p>
-        </div>
+          return (
+            <div className="text-center mt-10">
+              <h1 className="text-4xl font-serif text-[#B38463] sm:text-5xl leading-tight">
+                {displayName}
+              </h1>
+              <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                {displaySubtext}
+              </p>
+            </div>
+          );
+        })()}
 
         {subcategories.length > 0 ? (
           <div className="mt-16 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
@@ -206,6 +226,32 @@ export default async function CategoryPage({
             >
               &larr; Back to all collections
             </Link>
+          </div>
+        )}
+
+        {categorySlug === "corporates" && (
+          <div className="mt-24 pt-16 border-t border-gray-200">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div>
+                <h2 className="text-3xl font-serif text-green-900 mb-6 font-semibold">
+                  About Our Corporate Gifting
+                </h2>
+                <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                  {CATEGORY_CONTENT_OVERLAY.corporates.description}
+                </p>
+                <div className="bg-[#B38463]/10 border-l-4 border-[#B38463] p-5 rounded-r-lg">
+                  <p className="text-[#B38463] font-medium text-base">
+                    Need tailor-made corporate hampers? Contact our sales team directly on WhatsApp or fill out the enquiry form.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-3xl font-serif text-green-900 mb-6 font-semibold">
+                  Frequently Asked Questions
+                </h3>
+                <Accordion items={CATEGORY_CONTENT_OVERLAY.corporates.faqs} />
+              </div>
+            </div>
           </div>
         )}
       </div>
