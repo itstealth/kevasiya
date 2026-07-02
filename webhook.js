@@ -34,7 +34,7 @@ app.post("/webhook", (req, res) => {
   const repoName = req.body.repository?.name;
   console.log(`✅ Valid webhook received for repo: ${repoName}`);
 
-  if (repoName === "kevasiya-website") {
+  if (repoName === "kevasiya-website" || repoName === "kevasiya") {
     exec(
       "/var/www/running_sites/kevasiya.com/deploy_frontend.sh",
       (error, stdout, stderr) => {
