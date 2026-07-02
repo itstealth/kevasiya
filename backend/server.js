@@ -1074,8 +1074,10 @@ let cachedTokens = {
 // Function to exchange short-lived token for long-lived token
 const exchangeForLongLivedToken = async (shortLivedToken) => {
   try {
-    const CLIENT_SECRET =
-      process.env.INSTAGRAM_APP_SECRET || "15cdb5741b63995da661a4da31337011";
+    const CLIENT_SECRET = process.env.INSTAGRAM_APP_SECRET;
+    if (!CLIENT_SECRET) {
+      throw new Error("INSTAGRAM_APP_SECRET is not set in environment variables");
+    }
 
     const exchangeUrl = `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${CLIENT_SECRET}&access_token=${shortLivedToken}`;
 

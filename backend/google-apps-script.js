@@ -10,9 +10,9 @@
  * 6. Copy the web app URL and add it to your backend .env file as GOOGLE_APPS_SCRIPT_URL
  */
 
-// Replace this with your Google Sheet ID
-const SHEET_ID = "1xMeAuqouZlaFUM3Y4zFBnL9wb8MJYwg4Aihr5ZJCCOU";
-const SHEET_NAME = "website";
+// Replace this with your Google Sheet ID (or configure SHEET_ID in Apps Script properties)
+const SHEET_ID = (typeof PropertiesService !== 'undefined' && PropertiesService.getScriptProperties().getProperty("SHEET_ID")) || "1xMeAuqouZlaFUM3Y4zFBnL9wb8MJYwg4Aihr5ZJCCOU";
+const SHEET_NAME = (typeof PropertiesService !== 'undefined' && PropertiesService.getScriptProperties().getProperty("SHEET_NAME")) || "website";
 
 function doPost(e) {
   try {

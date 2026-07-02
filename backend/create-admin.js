@@ -4,8 +4,8 @@ require("dotenv").config();
 
 async function createAdminUser() {
   try {
-    const username = "admin";
-    const password = "admin123"; // Change this to your desired password
+    const username = process.env.INITIAL_ADMIN_USERNAME || "admin";
+    const password = process.env.INITIAL_ADMIN_PASSWORD || "admin123";
 
     // Check if user already exists
     const [existingUsers] = await db.query(
