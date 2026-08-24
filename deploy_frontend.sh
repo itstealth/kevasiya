@@ -1,25 +1,23 @@
-# File: /var/www/running_sites/kevasiya.com/deploy_frontend.sh
 #!/bin/bash
+# File: /var/www/kevasiya.com/kevasiya.com/deploy_frontend.sh
+set -euo pipefail
 
-# Go to frontend project
-cd /var/www/running_sites/kevasiya.com/frontend
+SITE_DIR="/var/www/kevasiya.com/kevasiya.com"
+COMPOSE_FILE="docker-compose.production.yml"
+
+cd "$SITE_DIR"
 
 echo "Pulling latest code..."
-git pull
+git pull origin main
 
-echo "Installing dependencies..."
-pnpm install
+echo "Rebuilding frontend image..."
+docker compose -f "$COMPOSE_FILE" build frontend
 
-echo "Building project..."
-pnpm run build
+echo "Restarting frontend container..."
+docker compose -f "$COMPOSE_FILE" up -d frontend
 
-echo "Restarting PM2 frontend process..."
-pm2 restart kevasiya_frontend
-
-echo "Restarting PM2 backend process..."
-pm2 restart kevasiya-backend
-
-echo "Restarting Apache..."
-sudo systemctl restart apache2
+echo "Reloading nginx..."
+docker compose -f "$COMPOSE_FILE" up -d nginx
 
 echo "Deploy complete!"
+docker compose -f "$COMPOSE_FILE" ps

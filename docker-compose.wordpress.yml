@@ -1,0 +1,57 @@
+services:
+  cms_blog_db:
+    image: mysql:8.0
+    container_name: kevasiya_cms_blog_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${CMS_BLOG_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: kevasiya_cms_blog_db
+      MYSQL_USER: kevasiya_cms_blog
+      MYSQL_PASSWORD: ${CMS_BLOG_DB_PASSWORD}
+    volumes:
+      - cms_blog_mysql_data:/var/lib/mysql
+    networks:
+      - kevasiya_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${CMS_BLOG_DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  cms_blog_php:
+    image: wordpress:php8.1-fpm
+    container_name: kevasiya_cms_blog_php
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: cms_blog_db
+      WORDPRESS_DB_USER: kevasiya_cms_blog
+      WORDPRESS_DB_PASSWORD: ${CMS_BLOG_DB_PASSWORD}
+      WORDPRESS_DB_NAME: kevasiya_cms_blog_db
+    volumes:
+      - ./wordpress:/var/www/html
+    depends_on:
+      cms_blog_db:
+        condition: service_healthy
+    networks:
+      - kevasiya_network
+
+  cms_blog_nginx:
+    image: nginx:alpine
+    container_name: kevasiya_cms_blog_nginx
+    restart: unless-stopped
+    ports:
+      - "1340:80"
+    volumes:
+      - ./wordpress:/var/www/html:ro
+    depends_on:
+      - cms_blog_php
+    networks:
+      - kevasiya_network
+
+networks:
+  kevasiya_network:
+    external: true
+
+volumes:
+  cms_blog_mysql_data:

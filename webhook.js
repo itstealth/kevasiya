@@ -36,7 +36,7 @@ app.post("/webhook", (req, res) => {
 
   if (repoName === "kevasiya-website" || repoName === "kevasiya") {
     exec(
-      "/var/www/running_sites/kevasiya.com/deploy_frontend.sh",
+      "/var/www/kevasiya.com/kevasiya.com/deploy_frontend.sh",
       (error, stdout, stderr) => {
         if (error) {
           console.error(`❌ Frontend error: ${error.message}`);
@@ -48,7 +48,7 @@ app.post("/webhook", (req, res) => {
     );
   } else if (repoName === "backend-kevasiya") {
     exec(
-      "/var/www/running_sites/kevasiya.com/deploy_backend.sh",
+      "/var/www/kevasiya.com/kevasiya.com/deploy_backend.sh",
       (error, stdout, stderr) => {
         if (error) {
           console.error(`❌ Backend error: ${error.message}`);
