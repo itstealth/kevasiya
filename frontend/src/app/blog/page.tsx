@@ -5,6 +5,9 @@ import { BlogPagination } from './components/BlogPagination';
 import { BlogHero } from './components/BlogHero';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface BlogPageProps {
   searchParams: Promise<{
     page?: string;

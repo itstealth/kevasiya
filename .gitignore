@@ -82,3 +82,17 @@ test/
 # Local Backend Copy
 # ======================
 frontend/backend-kevasiya/
+
+# ======================
+# WordPress / CMS Blog Runtime
+# (WP core + uploads + wp-config.php with live DB credentials)
+# ======================
+wordpress/
+cms-blog/
+
+# ======================
+# Backup Files
+# ======================
+*.bak
+*.bak-*
+*.bak.*

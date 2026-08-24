@@ -4,8 +4,9 @@ networks:
     ipam:
       config:
       - subnet: 172.28.0.0/16
-  kevasiyacom_strapi_network:
+  cms_blog_network:
     external: true
+    name: kevasiya_network
 
 services:
   backend:
@@ -29,6 +30,7 @@ services:
     - DB_PASSWORD=${DB_PASSWORD}
     - DB_NAME=kevasiya_db
     - JWT_SECRET=${JWT_SECRET}
+    - GOOGLE_APPS_SCRIPT_URL=${GOOGLE_APPS_SCRIPT_URL}
     healthcheck:
       interval: 30s
       retries: 3
@@ -106,7 +108,6 @@ services:
     - HOSTNAME=0.0.0.0
     - PORT=5001
     - NEXT_PUBLIC_API_URL=/api
-    - NEXT_PUBLIC_STRAPI_API_URL=http://strapi.kevasiya.com
     - INTERNAL_API_URL=http://backend:5001
     healthcheck:
       interval: 30s
@@ -119,11 +120,8 @@ services:
       - --spider
       - http://127.0.0.1:5001/
       timeout: 10s
-    extra_hosts:
-      - "strapi.kevasiya.com:172.29.0.4"
     networks:
     - kevasiya_network
-    - kevasiyacom_strapi_network
     ports:
     - 3016:5001
     read_only: true
@@ -152,6 +150,7 @@ services:
     image: nginx:alpine
     networks:
     - kevasiya_network
+    - cms_blog_network
     ports:
     - 8089:80
     - 4439:443

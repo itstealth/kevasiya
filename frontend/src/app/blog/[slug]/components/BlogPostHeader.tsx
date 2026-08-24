@@ -1,13 +1,17 @@
 import Image from 'next/image';
-import { BlogPost } from '@/types/strapi-blog';
-import { formatDate } from '@/lib/strapi';
+import { BlogPost } from '@/types/blog';
+import { formatDate } from '@/lib/wordpress';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
 interface BlogPostHeaderProps {
   post: BlogPost;
 }
 
+const primaryCategory = (post: BlogPost): string | undefined =>
+  post.categories && post.categories.length > 0 ? post.categories[0] : undefined;
+
 export function BlogPostHeader({ post }: BlogPostHeaderProps) {
+  const category = primaryCategory(post);
   return (
     <header className="relative bg-gradient-to-b from-[#3a5a40] via-[#3a5a40]/60 to-[#3a5a40]/0  pt-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Pattern */}
@@ -64,9 +68,9 @@ export function BlogPostHeader({ post }: BlogPostHeaderProps) {
           {/* Category Label */}
           <div className="flex items-center">
             <span className="font-semibold text-gray-700 mr-2">Category:</span>
-            {post.category && (
+            {category && (
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#3a5a40]/10 text-[#3a5a40]">
-                {post.category}
+                {category}
               </span>
             )}
           </div>

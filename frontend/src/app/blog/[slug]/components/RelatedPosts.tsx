@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { BlogPost } from '@/types/strapi-blog';
-import { formatDate } from '@/lib/strapi';
+import { BlogPost } from '@/types/blog';
+import { formatDate } from '@/lib/wordpress';
+
+const primaryCategory = (post: BlogPost): string | undefined =>
+  post.categories && post.categories.length > 0 ? post.categories[0] : undefined;
 
 interface RelatedPostsProps {
   posts: BlogPost[];
@@ -68,10 +71,10 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
               </div>
 
               {/* Category Badge */}
-              {post.category && (
+              {primaryCategory(post) && (
                 <div className="mb-2">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#3a5a40]/10 text-[#3a5a40]">
-                    {post.category}
+                    {primaryCategory(post)}
                   </span>
                 </div>
               )}

@@ -1,11 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { fetchStrapiBlogPost, fetchRelatedBlogPosts } from '@/lib/strapi';
+import { fetchWordPressPost, fetchRelatedPosts } from '@/lib/wordpress';
 import { BlogPostContent } from './components/BlogPostContent';
 import { BlogPostHeader } from './components/BlogPostHeader';
 import { RelatedPosts } from './components/RelatedPosts';
 import { BlogPostNavigation } from './components/BlogPostNavigation';
-import Script from 'next/script';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -13,10 +15,12 @@ interface BlogPostPageProps {
   }>;
 }
 
+const SITE_URL = 'https://kevasiya.com';
+
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await fetchStrapiBlogPost(slug);
-  
+  const post = await fetchWordPressPost(slug);
+
   if (!post) {
     return {
       title: 'Post Not Found | Kevasiya Blog',
@@ -24,25 +28,22 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  // Use Strapi meta description
-  const metaDescription = post.metaDescription || post.excerpt.substring(0, 160);
-  
-  // Use canonical URL from Strapi or fallback
-  const canonicalUrl = post.canonicalUrl || `https://kevasiya.com/blog/${post.slug}`;
-
-  // Use OG image from Strapi or fallback
-  const ogImageUrl = post.ogImage || post.featuredImage || '/hero.webp';
+  // Build metadata from WordPress post fields (with sensible fallbacks)
+  const metaDescription = post.metaDescription || post.excerpt.replace(/<[^>]*>/g, '').substring(0, 160);
+  const canonicalUrl = `${SITE_URL}/blog/${post.slug}`;
+  const ogImageUrl = post.featuredImage || '/hero.webp';
+  const tagsString = post.tags.join(', ');
 
   return {
-    title: post.metaTitle || `${post.title} | Kevasiya Blog`,
+    title: `${post.title} | Kevasiya Blog`,
     description: metaDescription,
-    keywords: post.tags.join(', ') || 'luxury gifting, corporate gifts, wedding hampers, baby shower gifts, gift tips, kevasiya',
+    keywords: tagsString || 'luxury gifting, corporate gifts, wedding hampers, baby shower gifts, gift tips, kevasiya',
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: post.ogTitle || post.title,
-      description: post.ogDescription || metaDescription,
+      title: post.title,
+      description: metaDescription,
       url: canonicalUrl,
       siteName: 'Kevasiya',
       images: [
@@ -61,8 +62,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.ogTitle || post.title,
-      description: post.ogDescription || metaDescription,
+      title: post.title,
+      description: metaDescription,
       images: [ogImageUrl],
     },
   };
@@ -70,31 +71,22 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = await fetchStrapiBlogPost(slug);
-  
+  const post = await fetchWordPressPost(slug);
+
   if (!post) {
     notFound();
   }
 
-  // Fetch related posts by category
-  const relatedPosts = await fetchRelatedBlogPosts(post.category, post.slug, 3);
+  // Fetch related posts by category (exclude the current post)
+  const relatedPosts = await fetchRelatedPosts(post.categoryIds, post.id, 3);
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
-      {post.jsonLdSchema && (
-        <Script
-          id="blog-post-schema"
-          type="application/ld+json"
-          children={JSON.stringify(post.jsonLdSchema)}
-        />
-      )}
-
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
         {/* Blog Post Header */}
         <BlogPostHeader post={post} />
 
-        {/* Blog Post Content */}
+        {/* Blog Post Content — content is rendered as HTML via dangerouslySetInnerHTML */}
         <article className="py-2 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <BlogPostContent post={post} />

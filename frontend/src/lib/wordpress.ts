@@ -1,6 +1,7 @@
 import { WordPressPost, BlogPost } from '@/types/blog';
 
-const WORDPRESS_API_URL = 'https://kevasiya.in/wp-json/wp/v2';
+const WORDPRESS_API_URL =
+  process.env.WORDPRESS_API_URL || 'https://kevasiya.com/cms-blog/wp-json/wp/v2';
 
 export async function fetchWordPressPosts(page: number = 1, perPage: number = 10): Promise<{
   posts: BlogPost[];
@@ -114,14 +115,22 @@ function decodeHtmlEntities(text: string): string {
 function transformWordPressPost(wpPost: WordPressPost): BlogPost {
   // Extract featured image from yoast_head_json
   const featuredImage = wpPost.yoast_head_json?.og_image?.[0]?.url || '';
-  
-  // Extract categories and tags (simplified for now)
+
+  // Extract categories and tags from _embedded["wp:term"] (requires _embed=true on the request)
+  const embeddedTerms = (wpPost as unknown as { _embedded?: { 'wp:term'?: Array<Array<{ taxonomy: string; name: string }>> } })._embedded?.['wp:term'] || [];
+  const categoryIds: number[] = wpPost.categories || [];
   const categories: string[] = [];
   const tags: string[] = [];
-  
+  embeddedTerms.forEach((termGroup) => {
+    termGroup.forEach((term) => {
+      if (term.taxonomy === 'category') categories.push(term.name);
+      if (term.taxonomy === 'post_tag') tags.push(term.name);
+    });
+  });
+
   // Extract reading time from yoast_head_json
   const readingTime = wpPost.yoast_head_json?.twitter_misc?.['Est. reading time'] || '5 min read';
-  
+
   // Extract author name
   const author = wpPost.yoast_head_json?.author || 'Kevasiya Team';
 
@@ -140,6 +149,7 @@ function transformWordPressPost(wpPost: WordPressPost): BlogPost {
     featuredImage,
     author,
     readingTime,
+    categoryIds,
     categories,
     tags,
     metaDescription: metaDescription ? decodeHtmlEntities(metaDescription) : undefined,

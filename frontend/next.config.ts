@@ -58,7 +58,18 @@ const nextConfig = {
         hostname: "100.66.61.11",
         port: "1337",
         pathname: "/**",
-      }
+      },
+      // WordPress image patterns
+      {
+        protocol: "https",
+        hostname: "kevasiya.com",
+        pathname: "/cms-blog/wp-content/**",
+      },
+      {
+        protocol: "https",
+        hostname: "kevasiya.com",
+        pathname: "/wp-content/**",
+      },
     ],
   },
 };

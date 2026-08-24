@@ -174,6 +174,7 @@ export interface BlogPost {
   featuredImage?: string;
   author: string;
   readingTime: string;
+  categoryIds: number[];
   categories: string[];
   tags: string[];
   metaDescription?: string;

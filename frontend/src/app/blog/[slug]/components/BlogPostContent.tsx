@@ -1,6 +1,4 @@
-import { BlogPost } from '@/types/strapi-blog';
-import ReactMarkdown from 'react-markdown';
-import Image from 'next/image';
+import { BlogPost } from '@/types/blog';
 
 interface BlogPostContentProps {
   post: BlogPost;
@@ -34,47 +32,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
         prose-th:bg-[#3a5a40] prose-th:text-white prose-th:font-semibold prose-th:p-3 prose-th:text-left
         prose-td:border prose-td:border-gray-300 prose-td:p-3 prose-td:text-gray-700
       ">
-        <ReactMarkdown
-          components={{
-            // Custom image component using Next.js Image for optimization
-            img: ({ ...props }) => {
-              const src = typeof props.src === 'string' ? props.src : '';
-              const alt = typeof props.alt === 'string' ? props.alt : '';
-              
-              // Handle Strapi images
-              const imageSrc = src.startsWith('http') ? src : `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${src}`;
-              
-              return (
-                <span className="block my-8">
-                  <Image
-                    src={imageSrc}
-                    alt={alt}
-                    width={1200}
-                    height={675}
-                    className="rounded-xl shadow-2xl w-full h-auto"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                  />
-                </span>
-              );
-            },
-            // Enhanced heading components
-            h1: ({ ...props }) => (
-              <h1 className="scroll-mt-20" {...props} />
-            ),
-            h2: ({ ...props }) => (
-              <h2 className="scroll-mt-20" {...props} />
-            ),
-            h3: ({ ...props }) => (
-              <h3 className="scroll-mt-20" {...props} />
-            ),
-            // Enhanced link component
-            a: ({ ...props }) => (
-              <a {...props} target={props.href?.startsWith('http') ? '_blank' : undefined} rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined} />
-            ),
-          }}
-        >
-          {post.content}
-        </ReactMarkdown>
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
       </div>
 
       {/* Author Bio */}

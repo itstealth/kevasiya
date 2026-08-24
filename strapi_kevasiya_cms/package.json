@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@casl/ability": "^6.7.5",
+    "@strapi/admin": "5.39.0",
+    "@strapi/design-system": "2.2.0",
     "@strapi/plugin-cloud": "^5.39.0",
     "@strapi/plugin-users-permissions": "^5.39.0",
     "@strapi/strapi": "^5.39.0",

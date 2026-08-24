@@ -1,10 +1,11 @@
 import { StrapiBlogPost, StrapiAPIResponse, BlogPost } from '@/types/strapi-blog';
+export const STRAPI_PUBLIC_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://kevasiya.com/cms-blog";
 
-// TODO: Update this to your public Strapi domain
-const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://57.128.189.225:1337';
+// WordPress API URL - mounted at /blog/ on the server
+const WORDPRESS_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://kevasiya.com/cms-blog/wp-json/wp/v2';
 
 /**
- * Fetch all blog posts from Strapi with pagination
+ * Fetch all blog posts from WordPress with pagination
  */
 export async function fetchStrapiBlogPosts(page: number = 1, pageSize: number = 9): Promise<{
   posts: BlogPost[];
@@ -13,7 +14,7 @@ export async function fetchStrapiBlogPosts(page: number = 1, pageSize: number = 
 }> {
   try {
     const response = await fetch(
-      `${STRAPI_API_URL}/api/blogs?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort[0]=publishedAt:desc`,
+      `${WORDPRESS_API_URL}/posts?page=${page}&per_page=${pageSize}&_embed`,
       {
         next: { revalidate: 30 }, // Revalidate every 30 seconds
       }
@@ -23,17 +24,19 @@ export async function fetchStrapiBlogPosts(page: number = 1, pageSize: number = 
       throw new Error(`Failed to fetch posts: ${response.status}`);
     }
 
-    const data: StrapiAPIResponse<StrapiBlogPost[]> = await response.json();
+    const totalPosts = parseInt(response.headers.get('X-WP-Total') || '0', 10);
+    const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1', 10);
+    const posts: WordPressPost[] = await response.json();
 
-    const transformedPosts: BlogPost[] = data.data.map(transformStrapiBlogPost);
+    const transformedPosts: BlogPost[] = posts.map(transformWordPressPost);
 
     return {
       posts: transformedPosts,
-      totalPages: data.meta.pagination.pageCount,
-      totalPosts: data.meta.pagination.total,
+      totalPages,
+      totalPosts,
     };
   } catch (error) {
-    console.error('Error fetching Strapi blog posts:', error);
+    console.error('Error fetching WordPress blog posts:', error);
     return {
       posts: [],
       totalPages: 0,
@@ -43,12 +46,12 @@ export async function fetchStrapiBlogPosts(page: number = 1, pageSize: number = 
 }
 
 /**
- * Fetch a single blog post by slug from Strapi
+ * Fetch a single blog post by slug from WordPress
  */
 export async function fetchStrapiBlogPost(slug: string): Promise<BlogPost | null> {
   try {
     const response = await fetch(
-      `${STRAPI_API_URL}/api/blogs?filters[slug][$eq]=${slug}&populate=*`,
+      `${WORDPRESS_API_URL}/posts?slug=${slug}&_embed`,
       {
         next: { revalidate: 30 },
       }
@@ -58,15 +61,15 @@ export async function fetchStrapiBlogPost(slug: string): Promise<BlogPost | null
       throw new Error(`Failed to fetch post: ${response.status}`);
     }
 
-    const data: StrapiAPIResponse<StrapiBlogPost[]> = await response.json();
-    
-    if (data.data.length === 0) {
+    const posts: WordPressPost[] = await response.json();
+
+    if (posts.length === 0) {
       return null;
     }
 
-    return transformStrapiBlogPost(data.data[0]);
+    return transformWordPressPost(posts[0]);
   } catch (error) {
-    console.error('Error fetching Strapi blog post:', error);
+    console.error('Error fetching WordPress blog post:', error);
     return null;
   }
 }
@@ -80,19 +83,36 @@ export async function fetchRelatedBlogPosts(
   limit: number = 3
 ): Promise<BlogPost[]> {
   try {
+    // Get category ID from category name
+    const categoryResponse = await fetch(
+      `${WORDPRESS_API_URL.replace('/wp/v2/posts', '')}/wp/v2/categories?search=${encodeURIComponent(category)}`
+    );
+
+    if (!categoryResponse.ok) {
+      return [];
+    }
+
+    const categories: WordPressCategory[] = await categoryResponse.json();
+    if (categories.length === 0) {
+      return [];
+    }
+
+    const categoryId = categories[0].id;
+
+    // Get posts by category excluding current post
     const response = await fetch(
-      `${STRAPI_API_URL}/api/blogs?filters[category][$eq]=${category}&filters[slug][$ne]=${excludeSlug}&populate=*&pagination[limit]=${limit}&sort[0]=publishedAt:desc`,
-      {
-        next: { revalidate: 30 },
-      }
+      `${WORDPRESS_API_URL}/posts?categories=${categoryId}&per_page=${limit + 1}&_embed`
     );
 
     if (!response.ok) {
       throw new Error(`Failed to fetch related posts: ${response.status}`);
     }
 
-    const data: StrapiAPIResponse<StrapiBlogPost[]> = await response.json();
-    return data.data.map(transformStrapiBlogPost);
+    const posts: WordPressPost[] = await response.json();
+    return posts
+      .filter(post => post.slug !== excludeSlug)
+      .slice(0, limit)
+      .map(transformWordPressPost);
   } catch (error) {
     console.error('Error fetching related posts:', error);
     return [];
@@ -105,7 +125,7 @@ export async function fetchRelatedBlogPosts(
 export async function getAllBlogSlugs(): Promise<string[]> {
   try {
     const response = await fetch(
-      `${STRAPI_API_URL}/api/blogs?fields[0]=slug&pagination[limit]=1000`,
+      `${WORDPRESS_API_URL}/posts?per_page=100&fields=slug`,
       {
         next: { revalidate: 30 },
       }
@@ -115,76 +135,99 @@ export async function getAllBlogSlugs(): Promise<string[]> {
       throw new Error(`Failed to fetch blog slugs: ${response.status}`);
     }
 
-    const data: StrapiAPIResponse<StrapiBlogPost[]> = await response.json();
-    return data.data.map(post => post.slug);
+    const posts: { slug: string }[] = await response.json();
+    return posts.map(post => post.slug);
   } catch (error) {
     console.error('Error fetching blog slugs:', error);
     return [];
   }
 }
 
+// WordPress API response types
+interface WordPressPost {
+  id: number;
+  date: string;
+  date_gmt: string;
+  modified: string;
+  modified_gmt: string;
+  slug: string;
+  status: string;
+  link: string;
+  title: { rendered: string };
+  content: { rendered: string };
+  excerpt: { rendered: string };
+  author: number;
+  featured_media: number;
+  categories: number[];
+  tags: number[];
+  _embedded?: {
+    author?: Array<{ name: string }>;
+    'wp:featuredmedia'?: Array<{
+      source_url: string;
+      alt_text: string;
+    }>;
+  };
+}
+
+interface WordPressCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 /**
- * Transform Strapi blog post to normalized BlogPost format
+ * Transform WordPress post to normalized BlogPost format
  */
-function transformStrapiBlogPost(strapiPost: StrapiBlogPost): BlogPost {
+function transformWordPressPost(wpPost: WordPressPost): BlogPost {
   // Calculate reading time from content
-  const readingTime = calculateReadingTime(strapiPost.content);
-  
-  // Get the best quality image URL
-  const featuredImage = getFeaturedImageUrl(strapiPost.og_image);
-  
-  // Parse tags from comma-separated string
-  const tags = strapiPost.tags
-    ? strapiPost.tags.split(',').map(tag => tag.trim()).filter(Boolean)
-    : [];
+  const readingTime = calculateReadingTime(wpPost.content.rendered);
+
+  // Get featured image from embedded data
+  const featuredImage = wpPost._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+  const featuredImageAlt = wpPost._embedded?.['wp:featuredmedia']?.[0]?.alt_text || wpPost.title.rendered;
+
+  // Get author name from embedded data
+  const author = wpPost._embedded?.author?.[0]?.name || 'Kevasiya Team';
+
+  // WordPress excerpts are HTML, strip tags
+  const excerpt = stripHtml(wpPost.excerpt.rendered);
+
+  // WordPress content is HTML
+  const content = wpPost.content.rendered;
+
+  // Extract plain text title
+  const title = stripHtml(wpPost.title.rendered);
 
   return {
-    id: strapiPost.id,
-    documentId: strapiPost.documentId,
-    title: strapiPost.title,
-    slug: strapiPost.slug,
-    excerpt: strapiPost.excerpt,
-    content: strapiPost.content,
-    date: strapiPost.publishedAt,
-    modified: strapiPost.updatedAt,
-    published: strapiPost.published,
+    id: wpPost.id,
+    documentId: String(wpPost.id),
+    title,
+    slug: wpPost.slug,
+    excerpt,
+    content,
+    date: wpPost.date,
+    modified: wpPost.modified,
+    published: wpPost.date.split('T')[0],
     featuredImage,
-    featuredImageAlt: strapiPost.og_image?.alternativeText || strapiPost.title,
-    author: 'Kevasiya Team', // Default author
+    featuredImageAlt,
+    author,
     readingTime,
-    category: strapiPost.category || 'Uncategorized',
-    tags,
-    metaTitle: strapiPost.meta_title,
-    metaDescription: strapiPost.meta_description,
-    canonicalUrl: strapiPost.canonical_url,
-    ogTitle: strapiPost.og_title,
-    ogDescription: strapiPost.og_description,
-    ogImage: getFeaturedImageUrl(strapiPost.og_image),
-    jsonLdSchema: strapiPost.json_ld_schema,
+    category: 'General', // WordPress categories need to be fetched separately
+    tags: [], // WordPress tags need to be fetched separately
+    metaTitle: title,
+    metaDescription: excerpt.substring(0, 160),
+    canonicalUrl: `/blog/${wpPost.slug}`,
+    ogTitle: title,
+    ogDescription: excerpt.substring(0, 160),
+    ogImage: featuredImage,
   };
 }
 
 /**
- * Get the best quality featured image URL from Strapi image object
+ * Strip HTML tags from a string
  */
-function getFeaturedImageUrl(image: StrapiBlogPost['og_image']): string | undefined {
-  if (!image) return undefined;
-
-  // Prefer large format, fallback to medium, small, or original
-  if (image.formats?.large?.url) {
-    return `${STRAPI_API_URL}${image.formats.large.url}`;
-  }
-  if (image.formats?.medium?.url) {
-    return `${STRAPI_API_URL}${image.formats.medium.url}`;
-  }
-  if (image.formats?.small?.url) {
-    return `${STRAPI_API_URL}${image.formats.small.url}`;
-  }
-  if (image.url) {
-    return `${STRAPI_API_URL}${image.url}`;
-  }
-
-  return undefined;
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').trim();
 }
 
 /**
@@ -222,4 +265,3 @@ export function generateSlugFromTitle(title: string): string {
     .replace(/-+/g, '-')
     .trim();
 }
-
