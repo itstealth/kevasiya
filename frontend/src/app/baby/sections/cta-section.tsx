@@ -142,6 +142,7 @@ export function CTASection() {
           budget: formData.budget || null,
           message: formData.message,
           productDetails: "Baby Collection Inquiry",
+          source: "Baby Page",
           // Add UTM parameters
           utm_source: utmData.utm_source || null,
           utm_medium: utmData.utm_medium || null,

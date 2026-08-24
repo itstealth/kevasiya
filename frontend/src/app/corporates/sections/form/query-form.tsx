@@ -132,6 +132,7 @@ export default function QueryForm() {
           budget: formData.budget || null,
           message: formData.message,
           productDetails: "Corporate Gifting Inquiry",
+          source: "Corporate Page",
           // Add UTM parameters
           utm_source: utmData.utm_source || null,
           utm_medium: utmData.utm_medium || null,

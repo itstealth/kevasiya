@@ -161,6 +161,7 @@ function ContactForm() {
         },
         body: JSON.stringify({
           ...formData,
+          source: "Contact Page",
           numGifts: formData.numGifts ? Number(formData.numGifts) : null,
           // Add UTM parameters
           utm_source: utmData.utm_source || null,

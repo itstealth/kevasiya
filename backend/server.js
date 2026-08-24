@@ -588,6 +588,7 @@ app.post("/api/contact-submissions", async (req, res) => {
       occasion,
       numGifts,
       budget,
+      source,
     } = req.body;
 
     // Basic validation
@@ -631,7 +632,7 @@ app.post("/api/contact-submissions", async (req, res) => {
         utm_term: req.body.utm_term || "",
         utm_content: req.body.utm_content || "",
         timestamp: new Date().toISOString(),
-        source: "website",
+        source: source || "website",
       });
     } catch (sheetsError) {
       console.error("Failed to send to Google Sheets:", sheetsError);
