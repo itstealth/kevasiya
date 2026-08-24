@@ -68,7 +68,6 @@ interface Submission {
   last_name: string | null;
   email: string | null;
   phone: string;
-  product_details: string | null;
   message: string | null;
   occasion: string | null;
   num_gifts: number | null;
@@ -198,7 +197,6 @@ export default function SubmissionsPage() {
       const occ = (s.occasion || "").toLowerCase();
       const bud = (s.budget || "").toLowerCase();
       const msg = (s.message || "").toLowerCase();
-      const det = (s.product_details || "").toLowerCase();
 
       const map: Record<string, string> = {
         name: fullName,
@@ -207,10 +205,7 @@ export default function SubmissionsPage() {
         occasion: occ,
         budget: bud,
         message: msg,
-        details: det,
-        all: [fullName, email, phone, occ, bud, msg, det]
-          .filter(Boolean)
-          .join(" "),
+        all: [fullName, email, phone, occ, bud, msg].filter(Boolean).join(" "),
       };
 
       const value = field in map ? map[field] : map["all"];
@@ -287,7 +282,6 @@ export default function SubmissionsPage() {
       Occasion: s.occasion || "",
       "No. of Gifts": s.num_gifts ?? "",
       Budget: s.budget || "",
-      "Product Details": s.product_details || "",
       Message: s.message || "",
       "Submitted At": new Date(s.submitted_at).toLocaleString(),
     }));
@@ -350,7 +344,6 @@ export default function SubmissionsPage() {
                   <SelectItem value="phone">Phone</SelectItem>
                   <SelectItem value="occasion">Occasion</SelectItem>
                   <SelectItem value="budget">Budget</SelectItem>
-                  <SelectItem value="details">Product details</SelectItem>
                   <SelectItem value="message">Message</SelectItem>
                 </SelectContent>
               </Select>
@@ -700,11 +693,6 @@ export default function SubmissionsPage() {
                 value={new Date(
                   selectedSubmission.submitted_at
                 ).toLocaleString()}
-              />
-              <InfoRow
-                icon={<Package size={16} />}
-                label="Product Details"
-                value={selectedSubmission.product_details}
               />
               <InfoRow
                 icon={<MessageSquare size={16} />}

@@ -16,20 +16,19 @@
  *   C  Last Name                 lastName
  *   D  Email                     email
  *   E  Phone                     phone
- *   F  Product Details           productDetails
- *   G  Occasion                  occasion
- *   H  No. of Hampers/Gifts      numGifts
- *   I  Budget                    budget
- *   J  Additional Information    message
- *   K  UTM Source                utm_source
- *   L  UTM Medium                utm_medium
- *   M  UTM Campaign              utm_campaign
- *   N  UTM Term                  utm_term
- *   O  UTM Content               utm_content
- *   P  Source                    source        (defaults to "website")
- *   Q  Submission Timestamp      timestamp     (ISO string from the backend)
+ *   F  Occasion                  occasion
+ *   G  No. of Hampers/Gifts      numGifts
+ *   H  Budget                    budget
+ *   I  Additional Information    message
+ *   J  UTM Source                utm_source
+ *   K  UTM Medium                utm_medium
+ *   L  UTM Campaign              utm_campaign
+ *   M  UTM Term                  utm_term
+ *   N  UTM Content               utm_content
+ *   O  Source                    source        (defaults to "website")
+ *   P  Submission Timestamp      timestamp     (ISO string from the backend)
  *
- * 17 columns, A through Q.
+ * 16 columns, A through P.
  */
 
 // Reference only - no actual code to run.

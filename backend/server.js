@@ -583,7 +583,6 @@ app.post("/api/contact-submissions", async (req, res) => {
       lastName,
       email,
       phone,
-      productDetails,
       message,
       occasion,
       numGifts,
@@ -600,13 +599,12 @@ app.post("/api/contact-submissions", async (req, res) => {
 
     // Insert into database (with new optional fields)
     const [result] = await db.query(
-      "INSERT INTO contact_submissions (first_name, last_name, email, phone, product_details, message, occasion, num_gifts, budget) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO contact_submissions (first_name, last_name, email, phone, message, occasion, num_gifts, budget) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         firstName,
         lastName || null,
         email || null,
         phone,
-        productDetails || null,
         message || null,
         occasion || null,
         Number.isFinite(parseInt(numGifts)) ? parseInt(numGifts) : null,
@@ -621,7 +619,6 @@ app.post("/api/contact-submissions", async (req, res) => {
         lastName: lastName || "",
         email: email || "",
         phone,
-        productDetails: productDetails || "",
         message: message || "",
         occasion: occasion || "",
         numGifts: Number.isFinite(parseInt(numGifts)) ? parseInt(numGifts) : "",

@@ -141,7 +141,6 @@ export function CTASection() {
           numGifts: formData.numGifts ? Number(formData.numGifts) : null,
           budget: formData.budget || null,
           message: formData.message,
-          productDetails: "Baby Collection Inquiry",
           source: "Baby Page",
           // Add UTM parameters
           utm_source: utmData.utm_source || null,

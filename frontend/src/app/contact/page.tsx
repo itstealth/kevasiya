@@ -35,7 +35,6 @@ interface FormData {
   email: string;
   phone: string;
   message: string;
-  productDetails: string;
   occasion?: string;
   numGifts?: string;
   budget?: string;
@@ -47,7 +46,6 @@ interface FormErrors {
   email?: string;
   phone?: string;
   message?: string;
-  productDetails?: string;
   occasion?: string;
   numGifts?: string;
   budget?: string;
@@ -71,7 +69,6 @@ function ContactForm() {
     email: "",
     phone: "",
     message: "",
-    productDetails: "",
     occasion: "",
     numGifts: "",
     budget: "",
@@ -82,17 +79,8 @@ function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [utmData, setUtmData] = useState<UTMData>({});
 
-  // Auto-fill product details from URL parameter and extract UTM parameters
+  // Extract UTM parameters
   useEffect(() => {
-    const productParam = searchParams.get("product");
-    if (productParam) {
-      setFormData((prev) => ({
-        ...prev,
-        productDetails: productParam,
-      }));
-    }
-
-    // Extract UTM parameters
     setUtmData(extractUTMParams());
   }, [searchParams]);
 
@@ -505,25 +493,6 @@ function ContactForm() {
                           placeholder="e.g. ₹1500 per hamper or ₹1L total"
                         />
                       </div>
-                    </div>
-
-                    {/* productDetails Field */}
-                    <div className="space-y-3 hidden">
-                      <Label
-                        htmlFor="productDetails"
-                        className="text-sm font-semibold text-[#3A5A40]"
-                      >
-                        Product Details
-                      </Label>
-                      <Input
-                        id="productDetails"
-                        value={formData.productDetails}
-                        onChange={(e) =>
-                          handleInputChange("productDetails", e.target.value)
-                        }
-                        className={`h-14 text-lg border-gray-200 focus:border-[#3A5A40] transition-all duration-200`}
-                        placeholder="Enter product details..."
-                      />
                     </div>
 
                     {/* Message Field */}
