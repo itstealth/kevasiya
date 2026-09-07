@@ -10,7 +10,6 @@ const navLinks = [
   { name: "Baby", href: "/baby" },
   { name: "Wedding", href: "/wedding" },
   { name: "Corporates", href: "/corporates" },
-  { name: "Blog", href: "/blog" },
 ];
 
 // Pages where the header starts transparent over a full-bleed hero
