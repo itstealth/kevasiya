@@ -24,7 +24,7 @@ const steps = [
   {
     number: 2,
     icon: Pen,
-    label: "Fill the Contact Form",
+    label: "Message Us on WhatsApp",
     description: "Share your gifting needs—and leave the rest to us.",
   },
   {

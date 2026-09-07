@@ -102,7 +102,7 @@ function ContactContent() {
       <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-            {/* Contact Form - Takes 2 columns */}
+            {/* Contact details - Takes 2 columns */}
             <div className="lg:col-span-2 space-y-8">
               <div className="text-center lg:text-left">
                 <h2 className="text-4xl lg:text-5xl font-bold text-[#3A5A40] mb-4">

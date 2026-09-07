@@ -195,7 +195,7 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Contact Form */}
+            {/* Contact CTA */}
             <motion.div
               variants={itemVariants}
               className="max-w-2xl mx-auto text-center"

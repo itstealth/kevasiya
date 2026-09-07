@@ -98,7 +98,7 @@ export default function Nav() {
               })}
             </nav>
 
-            {/* Enquiry CTA + mobile burger */}
+            {/* Contact CTA + mobile burger */}
             <div className="flex items-center gap-3">
               <Link
                 href="/contact"
@@ -108,7 +108,7 @@ export default function Nav() {
                     : "border-[#AE8F65] text-[#AE8F65] hover:bg-[#AE8F65] hover:text-white"
                 }`}
               >
-                Enquiry
+                Contact
               </Link>
 
               <button

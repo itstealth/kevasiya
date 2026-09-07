@@ -108,7 +108,7 @@ export default function ReturnPolicyPage() {
 
             <p>
               You can also{" "}
-              <Link href="/contact">fill out our contact form</Link> and our team
+              <Link href="/contact">get in touch with us</Link> and our team
               will get back to you within 24 hours.
             </p>
           </div>
