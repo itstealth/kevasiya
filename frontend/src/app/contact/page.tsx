@@ -1,212 +1,19 @@
 "use client";
 
-import type React from "react";
 import { NumberTicker } from "@/components/magicui/number-ticker";
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-  CheckCircle,
-  AlertCircle,
-  Clock,
-  Users,
-  Award,
-  Shield,
-} from "lucide-react";
+import { Suspense } from "react";
+
+import { MapPin, Phone, Mail, Clock, Users, Award, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getApiUrl, extractUTMParams } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
-import PopupQueryForm from "../corporates/components/PopupQueryForm";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import ContactCTA from "@/components/ui/contact-cta";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  message: string;
-  occasion?: string;
-  numGifts?: string;
-  budget?: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  message?: string;
-  occasion?: string;
-  numGifts?: string;
-  budget?: string;
-}
-
-interface UTMData {
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-  utm_term?: string;
-  utm_content?: string;
-}
-
-function ContactForm() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
-    occasion: "",
-    numGifts: "",
-    budget: "",
-  });
-
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [utmData, setUtmData] = useState<UTMData>({});
-
-  // Extract UTM parameters
-  useEffect(() => {
-    setUtmData(extractUTMParams());
-  }, [searchParams]);
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    // First name validation
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
-    } else if (formData.firstName.trim().length < 2) {
-      newErrors.firstName = "First name must be at least 2 characters";
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-      newErrors.firstName = "First name can only contain letters";
-    }
-
-    // Phone validation - Updated to only accept 10 digits starting with 6-9
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^[6-9]\d{9}$/.test(formData.phone.replace(/[\s\-]/g, ""))) {
-      newErrors.phone =
-        "Please enter a valid 10-digit phone number starting with 6-9";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-  };
-
-  useEffect(() => {
-    // Scroll to top immediately
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // After 3 seconds, scroll down based on inner height for responsive behavior
-    const timer = setTimeout(() => {
-      const scrollAmount = Math.min(
-        window.innerHeight * (window.innerWidth < 768 ? 1.3 : 1.2)
-      ); // Responsive scroll amount based on viewport height
-      window.scrollTo({ top: scrollAmount, behavior: "smooth" });
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const apiUrl = getApiUrl();
-      const response = await fetch(`${apiUrl}/contact-submissions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          source: "Contact Page",
-          numGifts: formData.numGifts ? Number(formData.numGifts) : null,
-          // Add UTM parameters
-          utm_source: utmData.utm_source || null,
-          utm_medium: utmData.utm_medium || null,
-          utm_campaign: utmData.utm_campaign || null,
-          utm_term: utmData.utm_term || null,
-          utm_content: utmData.utm_content || null,
-        }),
-      });
-
-      if (!response.ok) {
-        // Handle error from backend
-        const errorData = await response.json();
-        console.error("Submission failed:", errorData);
-        // Maybe show an error message to the user
-        alert(`Error: ${errorData.error || "Failed to send message."}`);
-        setIsSubmitting(false);
-        return;
-      }
-
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-
-      // Redirect to thank you page after short delay
-      setTimeout(() => {
-        router.push("/thank-you");
-      }, 1500);
-    } catch (error) {
-      console.error("An error occurred:", error);
-      alert("An unexpected error occurred. Please try again.");
-      setIsSubmitting(false);
-    }
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#3A5A40]/5 via-white to-[#AE8F65]/5 flex items-center justify-center p-4">
-        <Card className="max-w-md w-full text-center shadow-2xl border-0 bg-white">
-          <CardContent className="p-12 space-y-6">
-            <div className="w-20 h-20 bg-[#3A5A40]/10 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle className="w-10 h-10 text-[#3A5A40]" />
-            </div>
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold text-[#3A5A40]">
-                Message Sent Successfully!
-              </h2>
-              <p className="text-gray-600 text-lg">
-                Thank you for reaching out. We&apos;ll get back to you within 24
-                hours.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
+function ContactContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#3A5A40]/5 via-white to-[#AE8F65]/5">
       {/* Hero Section */}
@@ -302,256 +109,26 @@ function ContactForm() {
                   Let&apos;s Start a Conversation
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl">
-                  Fill out the form below with your Query, and we&apos;ll get
-                  back to you with a personalized solution.
+                  Message us on WhatsApp or give us a call and our team will
+                  help you put together the right gifting for your occasion.
                 </p>
               </div>
 
               <Card className="shadow-2xl border-0 bg-white overflow-hidden pt-0">
-                {/* <CardHeader className="bg-gradient-to-r from-[#3A5A40]/5 to-[#AE8F65]/5 p-8">
-                  <CardTitle className="text-2xl text-[#3A5A40] text-center">
-                    Send Us a Message
-                  </CardTitle>
-                </CardHeader> */}
-                <CardContent className="p-8 lg:p-12">
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    {/* Name Fields */}
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="firstName"
-                          className="text-sm font-semibold text-[#3A5A40] flex items-center gap-2"
-                        >
-                          First Name *
-                        </Label>
-                        <Input
-                          id="firstName"
-                          value={formData.firstName}
-                          autoFocus
-                          onChange={(e) =>
-                            handleInputChange("firstName", e.target.value)
-                          }
-                          className={`h-14 text-lg ${
-                            errors.firstName
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#3A5A40]"
-                          } transition-all duration-200`}
-                          placeholder="Enter your first name"
-                        />
-                        {errors.firstName && (
-                          <div className="flex items-center gap-2 text-red-600 text-sm">
-                            <AlertCircle className="w-4 h-4" />
-                            {errors.firstName}
-                          </div>
-                        )}
-                      </div>
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="email"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          Official Email *
-                        </Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.email}
-                          required
-                          onChange={(e) =>
-                            handleInputChange("email", e.target.value)
-                          }
-                          className={`h-14 text-lg ${
-                            errors.email
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#3A5A40]"
-                          } transition-all duration-200`}
-                          placeholder="name@company.com"
-                        />
-                        {errors.email && (
-                          <div className="flex items-center gap-2 text-red-600 text-sm">
-                            <AlertCircle className="w-4 h-4" />
-                            {errors.email}
-                          </div>
-                        )}
-                      </div>
-                      <div className="space-y-3 hidden">
-                        <Label
-                          htmlFor="lastName"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          Last Name
-                        </Label>
-                        <Input
-                          id="lastName"
-                          value={formData.lastName}
-                          onChange={(e) =>
-                            handleInputChange("lastName", e.target.value)
-                          }
-                          className={`h-14 text-lg ${
-                            errors.lastName
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#3A5A40]"
-                          } transition-all duration-200`}
-                          placeholder="Enter your last name"
-                        />
-                        {errors.lastName && (
-                          <div className="flex items-center gap-2 text-red-600 text-sm">
-                            <AlertCircle className="w-4 h-4" />
-                            {errors.lastName}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Contact Fields */}
-                    <div className="grid sm:grid-cols-1 gap-6">
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="phone"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          Phone Number *
-                        </Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={formData.phone}
-                          required
-                          onChange={(e) =>
-                            handleInputChange("phone", e.target.value)
-                          }
-                          className={`h-14 text-lg ${
-                            errors.phone
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#3A5A40]"
-                          } transition-all duration-200`}
-                          placeholder="987xxxxxxx0"
-                        />
-                        {errors.phone && (
-                          <div className="flex items-center gap-2 text-red-600 text-sm">
-                            <AlertCircle className="w-4 h-4" />
-                            {errors.phone}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Additional Fields */}
-                    <div className="grid sm:grid-cols-3 gap-6">
-                      <div className="space-y-3 sm:col-span-1 col-span-3">
-                        <Label
-                          htmlFor="occasion"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          Occasion
-                        </Label>
-                        <Input
-                          id="occasion"
-                          value={formData.occasion}
-                          onChange={(e) =>
-                            handleInputChange("occasion", e.target.value)
-                          }
-                          className="h-14 text-lg border-gray-200 focus:border-[#3A5A40] transition-all duration-200"
-                          placeholder="e.g. Diwali, New Year, Corporate Event"
-                        />
-                      </div>
-                      <div className="space-y-3 sm:col-span-1 col-span-3">
-                        <Label
-                          htmlFor="numGifts"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          No. of Hampers/Gifts
-                        </Label>
-                        <Input
-                          id="numGifts"
-                          type="number"
-                          min={1}
-                          required
-                          value={formData.numGifts}
-                          onChange={(e) =>
-                            handleInputChange("numGifts", e.target.value)
-                          }
-                          className="h-14 text-lg border-gray-200 focus:border-[#3A5A40] transition-all duration-200"
-                          placeholder="e.g. 100"
-                        />
-                      </div>
-                      <div className="space-y-3 sm:col-span-1 col-span-3">
-                        <Label
-                          htmlFor="budget"
-                          className="text-sm font-semibold text-[#3A5A40]"
-                        >
-                          Any Budget
-                        </Label>
-                        <Input
-                          id="budget"
-                          required
-                          value={formData.budget}
-                          onChange={(e) =>
-                            handleInputChange("budget", e.target.value)
-                          }
-                          className="h-14 text-lg border-gray-200 focus:border-[#3A5A40] transition-all duration-200"
-                          placeholder="e.g. ₹1500 per hamper or ₹1L total"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Message Field */}
-                    <div className="space-y-3">
-                      <Label
-                        htmlFor="message"
-                        className="text-sm font-semibold text-[#3A5A40]"
-                      >
-                        Additional Information *
-                      </Label>
-                      <Textarea
-                        id="message"
-                        value={formData.message}
-                        onChange={(e) =>
-                          handleInputChange("message", e.target.value)
-                        }
-                        required
-                        className={`min-h-40 text-lg resize-none border-gray-200 focus:border-[#3A5A40] transition-all duration-200`}
-                        placeholder="Tell us about your gift choice, themes, recipients, delivery city, timelines..."
-                      />
-                      <div className="flex justify-between items-center">
-                        <div className="text-sm text-gray-500 invisible">
-                          Minimum 1 characters required
-                        </div>
-                        <span
-                          className={`text-sm ${
-                            formData.message.length > 450
-                              ? "text-red-500"
-                              : "text-gray-500"
-                          }`}
-                        >
-                          {formData.message.length}/500
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Submit Button */}
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full h-16 bg-gradient-to-r from-[#3A5A40] to-[#3A5A40]/90 hover:from-[#3A5A40]/90 hover:to-[#3A5A40]/80 text-white font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] disabled:scale-100 shadow-lg"
-                    >
-                      {isSubmitting ? (
-                        <div className="flex items-center gap-3">
-                          <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          Sending Message...
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3">
-                          <Send className="w-6 h-6" />
-                          Send Message
-                        </div>
-                      )}
-                    </Button>
-                  </form>
+                <CardContent className="p-8 lg:p-12 space-y-8">
+                  <ContactCTA
+                    whatsappMessage="Hello! I would like to talk about gifting with Kevasiya."
+                    className="justify-center lg:justify-start"
+                  />
+                  <p className="text-gray-600">
+                    Tell us the occasion, roughly how many gifts you need and
+                    your budget, and we will come back to you with options.
+                    We reply to WhatsApp messages within a couple of hours
+                    during business hours.
+                  </p>
                 </CardContent>
               </Card>
             </div>
-
             {/* Contact Info Sidebar - Takes 1 column */}
             <div className="space-y-8">
               {/* Contact Information Card */}
@@ -751,12 +328,11 @@ function ContactForm() {
 }
 
 export default function ContactPage() {
-  const [isQueryOpen, setIsQueryOpen] = useState(false);
 
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <ContactForm />
+        <ContactContent />
       </Suspense>
 
       {/* Desktop WhatsApp CTA */}
@@ -766,12 +342,9 @@ export default function ContactPage() {
 
       {/* Mobile Contact Dock */}
       <ContactDock
-        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I need help with your services. Can you assist me?"
       />
 
-      {/* Popup query form modal */}
-      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </>
   );
 }

@@ -9,7 +9,6 @@ import { CTASection } from "./sections/cta-section";
 import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
-import PopupQueryForm from "../corporates/components/PopupQueryForm";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface Product {
@@ -28,7 +27,6 @@ interface Category {
 
 export default function WeddingPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isQueryOpen, setIsQueryOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -88,12 +86,10 @@ export default function WeddingPage() {
 
       {/* Mobile Contact Dock */}
       <ContactDock
-        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'm interested in your wedding gifts and collections. Can you help me plan something special?"
       />
 
       {/* Popup query form modal */}
-      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </div>
   );
 }

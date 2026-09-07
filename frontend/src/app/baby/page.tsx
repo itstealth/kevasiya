@@ -9,7 +9,6 @@ import { CTASection } from "./sections/cta-section";
 import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
-import PopupQueryForm from "../corporates/components/PopupQueryForm";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 
 // --- Data Types ---
@@ -43,7 +42,6 @@ export default function BabyAnnouncementPage() {
   const [category, setCategory] = useState<Category | null>(null);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-  const [isQueryOpen, setIsQueryOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -131,12 +129,10 @@ export default function BabyAnnouncementPage() {
 
       {/* Mobile Contact Dock */}
       <ContactDock
-        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'm interested in your baby hampers and gifts. Can you help me?"
       />
 
       {/* Popup query form modal */}
-      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </div>
   );
 }

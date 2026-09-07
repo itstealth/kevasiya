@@ -2,19 +2,17 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { Gift, Heart, Sparkles, Crown, Baby, Building2 } from "lucide-react";
 import Link from "next/link";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
-import PopupQueryForm from "../corporates/components/PopupQueryForm";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 
 export default function AboutUs() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isQueryOpen, setIsQueryOpen] = useState(false);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
@@ -322,12 +320,10 @@ export default function AboutUs() {
 
       {/* Mobile Contact Dock */}
       <ContactDock
-        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'd like to learn more about Kevasiya and your services. Can you help me?"
       />
 
       {/* Popup query form modal */}
-      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </section>
   );
 }
