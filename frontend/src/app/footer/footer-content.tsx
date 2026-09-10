@@ -302,6 +302,7 @@ export function FooterContent() {
                   {[
                     { name: "About Us", href: "/about" },
                     // { name: "Our Story", href: "/story" },
+                    { name: "Blog", href: "/blog" },
                     { name: "Contact Us", href: "/contact" },
                     
                     // { name: "FAQs", href: "/" },
