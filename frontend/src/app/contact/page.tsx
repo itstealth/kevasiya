@@ -291,6 +291,104 @@ function ContactForm() {
         <Breadcrumb items={[{ label: "Contact" }]} />
       </div>
 
+      {/* Contact Information Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="shadow-2xl border-0 bg-white overflow-hidden py-0">
+            <CardHeader className="bg-gradient-to-r from-[#AE8F65]/10 to-[#AE8F65]/5 p-6">
+              <CardTitle className="text-2xl text-[#3A5A40]">
+                Contact Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a
+                  href="mailto:rishabh@kevasiya.in"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200 group-hover:bg-[#3A5A40] cursor-pointer">
+                    <Mail className="w-7 h-7 text-[#3A5A40] transition-colors duration-200 group-hover:text-white" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-semibold text-[#3A5A40] text-lg">
+                      Email Address
+                    </h4>
+                    <p className="text-gray-600 group-hover:text-[#3A5A40] transition-colors duration-200">
+                      rishabh@kevasiya.in
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      We respond within 2 hours
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href="tel:+919310010810"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200 group-hover:bg-[#3A5A40] cursor-pointer">
+                    <Phone className="w-7 h-7 text-[#3A5A40] transition-colors duration-200 group-hover:text-white" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-semibold text-[#3A5A40] text-lg">
+                      Phone Number
+                    </h4>
+                    <p className="text-gray-600 group-hover:text-[#3A5A40] transition-colors duration-200">
+                      +91 9310010810
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Available 9 AM - 6 PM IST
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://maps.app.goo.gl/KvrAG625XLWk3eCC9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200 group-hover:bg-[#3A5A40] cursor-pointer">
+                    <MapPin className="w-7 h-7 text-[#3A5A40] transition-colors duration-200 group-hover:text-white" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-semibold text-[#3A5A40] text-lg">
+                      Delhi Office
+                    </h4>
+                    <div className="text-gray-600 space-y-1 group-hover:text-[#3A5A40] transition-colors duration-200">
+                      <p>52 North Avenue Road</p>
+                      <p>West Punjabi Bagh</p>
+                      <p>New Delhi 110026, India</p>
+                    </div>
+                  </div>
+                </a>
+
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=609%2C+Sushant+Lok+1+Rd%2C+Block+A%2C+Sushant+Lok+Phase+I%2C+Sector+43%2C+Gurugram%2C+Haryana+122009"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200 group-hover:bg-[#3A5A40] cursor-pointer">
+                    <MapPin className="w-7 h-7 text-[#3A5A40] transition-colors duration-200 group-hover:text-white" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-semibold text-[#3A5A40] text-lg">
+                      Gurugram Office
+                    </h4>
+                    <div className="text-gray-600 space-y-1 group-hover:text-[#3A5A40] transition-colors duration-200">
+                      <p>609, Sushant Lok 1 Rd, Block A</p>
+                      <p>Sushant Lok Phase I, Sector 43</p>
+                      <p>Gurugram, Haryana 122009, India</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Our Locations Section */}
       <section className="py-16 bg-gradient-to-r from-[#3A5A40]/5 to-[#AE8F65]/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -623,96 +721,6 @@ function ContactForm() {
 
             {/* Contact Info Sidebar - Takes 1 column */}
             <div className="space-y-8">
-              {/* Contact Information Card */}
-              <Card className="shadow-2xl border-0 bg-white overflow-hidden py-0">
-                <CardHeader className="bg-gradient-to-r from-[#AE8F65]/10 to-[#AE8F65]/5 p-6">
-                  <CardTitle className="text-2xl text-[#3A5A40]">
-                    Contact Information
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-8 space-y-8">
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-7 h-7 text-[#3A5A40]" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-[#3A5A40] text-lg">
-                          Email Address
-                        </h4>
-                        <a
-                          href="mailto:rishabh@kevasiya.in"
-                          className="text-gray-600 cursor-pointer"
-                        >
-                          rishabh@kevasiya.in
-                        </a>
-                        <p className="text-sm text-gray-500">
-                          We respond within 2 hours
-                        </p>
-                      </div>
-                    </div>
-
-                    <Separator className="bg-gray-100" />
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-7 h-7 text-[#3A5A40]" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-[#3A5A40] text-lg">
-                          Phone Number
-                        </h4>
-                        <a
-                          href="tel:+919310010810"
-                          className="text-gray-600 cursor-pointer"
-                        >
-                          +91 9310010810
-                        </a>
-                        <p className="text-sm text-gray-500">
-                          Available 9 AM - 6 PM IST
-                        </p>
-                      </div>
-                    </div>
-
-                    <Separator className="bg-gray-100" />
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-7 h-7 text-[#3A5A40]" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-[#3A5A40] text-lg">
-                          Delhi Office
-                        </h4>
-                        <div className="text-gray-600 space-y-1">
-                          <p>52 North Avenue Road</p>
-                          <p>West Punjabi Bagh</p>
-                          <p>New Delhi 110026, India</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Separator className="bg-gray-100" />
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-7 h-7 text-[#3A5A40]" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-[#3A5A40] text-lg">
-                          Gurugram Office
-                        </h4>
-                        <div className="text-gray-600 space-y-1">
-                          <p>609, Sushant Lok 1 Rd, Block A</p>
-                          <p>Sushant Lok Phase I, Sector 43</p>
-                          <p>Gurugram, Haryana 122009, India</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Business Hours Card */}
               <Card className="shadow-2xl pb-0 border-0 bg-gradient-to-br from-[#3A5A40] to-[#3A5A40]/90 text-white overflow-hidden ">
                 <CardHeader className="p-">
