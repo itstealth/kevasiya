@@ -291,6 +291,75 @@ function ContactForm() {
         <Breadcrumb items={[{ label: "Contact" }]} />
       </div>
 
+      {/* Our Locations Section */}
+      <section className="py-16 bg-gradient-to-r from-[#3A5A40]/5 to-[#AE8F65]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold text-[#3A5A40] mb-4">
+              Our Locations
+            </h3>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Visit us in New Delhi or Gurugram, or schedule a virtual meeting
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-xl font-semibold text-[#3A5A40] mb-1">
+                Delhi Office
+              </h4>
+              <p className="text-gray-600 mb-4">
+                52 North Avenue Road, West Punjabi Bagh, New Delhi 110026, India
+              </p>
+              <Card className="shadow-2xl border-0 overflow-hidden py-0">
+                <CardContent className="p-0">
+                  <div className="h-[360px]">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.562977189838!2d77.12609107529067!3d28.672801375642848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d031290a1aa77%3A0x444d63f308de1f5b!2sKevasiya!5e0!3m2!1sen!2sin!4v1750769709987!5m2!1sen!2sin"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Kevasiya Delhi office location"
+                      className="w-full h-full"
+                    ></iframe>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
+              <h4 className="text-xl font-semibold text-[#3A5A40] mb-1">
+                Gurugram Office
+              </h4>
+              <p className="text-gray-600 mb-4">
+                609, Sushant Lok 1 Rd, Block A, Sushant Lok Phase I, Sector 43,
+                Gurugram, Haryana 122009, India
+              </p>
+              <Card className="shadow-2xl border-0 overflow-hidden py-0">
+                <CardContent className="p-0">
+                  <div className="h-[360px]">
+                    <iframe
+                      src="https://maps.google.com/maps?q=609%2C+Sushant+Lok+1+Rd%2C+Block+A%2C+Sushant+Lok+Phase+I%2C+Sector+43%2C+Gurugram%2C+Haryana+122009&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Kevasiya Gurugram office location"
+                      className="w-full h-full"
+                    ></iframe>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Main Content Section */}
       <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -689,38 +758,6 @@ function ContactForm() {
               </Card>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-20 bg-gradient-to-r from-[#3A5A40]/5 to-[#AE8F65]/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-[#3A5A40] mb-4">
-              Find Our Office
-            </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Visit us at our office in New Delhi or schedule a virtual meeting
-            </p>
-          </div>
-
-          <Card className="shadow-2xl border-0 overflow-hidden py-0">
-            <CardContent className="p-0">
-              <div className="h-[480px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.562977189838!2d77.12609107529067!3d28.672801375642848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d031290a1aa77%3A0x444d63f308de1f5b!2sKevasiya!5e0!3m2!1sen!2sin!4v1750769709987!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Kevasiya office location"
-                  className="w-full h-full"
-                ></iframe>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
