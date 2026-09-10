@@ -99,16 +99,18 @@ export default function Nav() {
 
             {/* Enquiry CTA + mobile burger */}
             <div className="flex items-center gap-3">
-              <Link
-                href="/contact"
-                className={`hidden lg:inline-flex items-center px-4 py-1.5 rounded-full text-[12px] font-medium tracking-wide border transition-all duration-200 ${
-                  transparent
-                    ? "border-white/50 text-white hover:bg-white hover:text-[#3A5A40]"
-                    : "border-[#AE8F65] text-[#AE8F65] hover:bg-[#AE8F65] hover:text-white"
-                }`}
-              >
-                Enquiry
-              </Link>
+              {pathname !== "/contact" && (
+                <Link
+                  href="/contact"
+                  className={`hidden lg:inline-flex items-center px-4 py-1.5 rounded-full text-[12px] font-medium tracking-wide border transition-all duration-200 ${
+                    transparent
+                      ? "border-white/50 text-white hover:bg-white hover:text-[#3A5A40]"
+                      : "border-[#AE8F65] text-[#AE8F65] hover:bg-[#AE8F65] hover:text-white"
+                  }`}
+                >
+                  Enquiry
+                </Link>
+              )}
 
               <button
                 aria-label="Open menu"
@@ -188,19 +190,21 @@ export default function Nav() {
                   );
                 })}
 
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35, duration: 0.25 }}
-                  className="mt-6"
-                >
-                  <Link
-                    href="/contact"
-                    className="block text-center py-3 px-6 bg-[#3A5A40] text-white rounded-full text-sm font-medium tracking-wide hover:bg-[#2e4a33] transition-colors"
+                {pathname !== "/contact" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35, duration: 0.25 }}
+                    className="mt-6"
                   >
-                    Get in Touch
-                  </Link>
-                </motion.div>
+                    <Link
+                      href="/contact"
+                      className="block text-center py-3 px-6 bg-[#3A5A40] text-white rounded-full text-sm font-medium tracking-wide hover:bg-[#2e4a33] transition-colors"
+                    >
+                      Get in Touch
+                    </Link>
+                  </motion.div>
+                )}
               </nav>
 
               {/* Bottom brand line */}
