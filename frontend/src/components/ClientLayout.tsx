@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Nav from "../app/Header";
 import Footer from "../app/footer";
+import AutoEnquiryPopup from "./AutoEnquiryPopup";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       {!isAdminPage && <Nav />}
       {children}
       {!isAdminPage && <Footer />}
+      {!isAdminPage && <AutoEnquiryPopup />}
     </>
   );
 }
