@@ -613,12 +613,30 @@ function ContactForm() {
                       </div>
                       <div className="space-y-1">
                         <h4 className="font-semibold text-[#3A5A40] text-lg">
-                          Office Address
+                          Delhi Office
                         </h4>
                         <div className="text-gray-600 space-y-1">
                           <p>52 North Avenue Road</p>
                           <p>West Punjabi Bagh</p>
                           <p>New Delhi 110026, India</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Separator className="bg-gray-100" />
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-14 h-14 bg-[#3A5A40]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-7 h-7 text-[#3A5A40]" />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="font-semibold text-[#3A5A40] text-lg">
+                          Gurugram Office
+                        </h4>
+                        <div className="text-gray-600 space-y-1">
+                          <p>609, Sushant Lok 1 Rd, Block A</p>
+                          <p>Sushant Lok Phase I, Sector 43</p>
+                          <p>Gurugram, Haryana 122009, India</p>
                         </div>
                       </div>
                     </div>

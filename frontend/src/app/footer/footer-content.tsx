@@ -192,6 +192,13 @@ export function FooterContent() {
                     <FiMapPin className="w-5 h-5 flex-shrink-0" />
                     <span>52, North Ave, Punjabi Bagh, Delhi, 110026</span>
                   </div>
+                  <div className="flex items-start gap-3 hover:text-kevasiya-gold transition-colors duration-300">
+                    <FiMapPin className="w-5 h-5 flex-shrink-0" />
+                    <span>
+                      609, Sushant Lok 1 Rd, Block A, Sushant Lok Phase I,
+                      Sector 43, Gurugram, Haryana 122009
+                    </span>
+                  </div>
                   <div className="flex items-center gap-3 hover:text-kevasiya-gold transition-colors duration-300">
                     <FiPhone className="w-5 h-5 flex-shrink-0" />
                     <a href="tel:+919310010810">+91 9310010810</a>
