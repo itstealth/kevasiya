@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "@/app/corporates/components/ContactDock";
+import PopupQueryForm from "@/app/corporates/components/PopupQueryForm";
 import Accordion from "@/components/ui/Accordion";
 
 const SUBCATEGORY_CONTENT_OVERLAY = {
@@ -110,6 +111,7 @@ interface Props {
 export default function SubCategoryClient({ categorySlug, subcategorySlug }: Props) {
   const [subcategory, setSubcategory] = useState<Subcategory | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const [isQueryOpen, setIsQueryOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notFoundPage, setNotFoundPage] = useState(false);
 
@@ -239,8 +241,10 @@ export default function SubCategoryClient({ categorySlug, subcategorySlug }: Pro
       </div>
 
       <ContactDock
+        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage={`Hello! I'm interested in your ${subcategoryName} collection. Can you help me?`}
       />
+      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </div>
   );
 }

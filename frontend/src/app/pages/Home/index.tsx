@@ -5,6 +5,8 @@ import Hero from "./hero";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import { TrendingProduct } from "./b2b-cards";
 import ContactDock from "../../corporates/components/ContactDock";
+import PopupQueryForm from "../../corporates/components/PopupQueryForm";
+import { useState } from "react";
 
 const CardSection = dynamic(() => import("./card-section"));
 const ClientsSlider = dynamic(() =>
@@ -33,6 +35,7 @@ export default function Home({
 }: {
   trendingProducts?: TrendingProduct[];
 }) {
+  const [isQueryOpen, setIsQueryOpen] = useState(false);
   return (
     <div>
       <Hero />
@@ -52,8 +55,10 @@ export default function Home({
 
       {/* Mobile Contact Dock */}
       <ContactDock
+        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'm interested in your services. Can you help me?"
       />
+      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </div>
   );
 }

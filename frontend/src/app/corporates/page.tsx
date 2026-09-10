@@ -1,9 +1,11 @@
 "use client"; // Required for Framer Motion hooks
 
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import Hero from "./sections/hero/Hero";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import GiftCategories from "./sections/giftcategories/GiftCategories";
+import PopupQueryForm from "./components/PopupQueryForm";
 import ContactDock from "./components/ContactDock";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 
@@ -21,6 +23,7 @@ const Form = dynamic(() => import("./sections/form/Form"));
 const FAQ = dynamic(() => import("./sections/faq/FAQ"));
 
 export default function Home() {
+  const [isQueryOpen, setIsQueryOpen] = useState(false);
   return (
     <section className="overflow-hidden">
       <Hero />
@@ -44,10 +47,12 @@ export default function Home() {
 
       {/* Floating contact dock */}
       <ContactDock
+        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'm interested in your corporate gifting services. Can you help me?"
       />
 
       {/* Popup query form modal */}
+      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </section>
   );
 }

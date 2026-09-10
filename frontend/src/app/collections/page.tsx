@@ -5,6 +5,7 @@ import CollectionsGrid from "./CollectionsGrid";
 import { getApiUrl } from "@/lib/utils";
 import WhatsAppCTA from "@/components/ui/whatsapp-cta";
 import ContactDock from "../corporates/components/ContactDock";
+import PopupQueryForm from "../corporates/components/PopupQueryForm";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 
 interface Collection {
@@ -17,6 +18,7 @@ interface Collection {
 
 export default function CollectionsPage() {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [isQueryOpen, setIsQueryOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -74,10 +76,12 @@ export default function CollectionsPage() {
 
       {/* Mobile Contact Dock */}
       <ContactDock
+        onContactClick={() => setIsQueryOpen(true)}
         whatsappMessage="Hello! I'm browsing your collections and need help choosing the perfect gift. Can you assist me?"
       />
 
       {/* Popup query form modal */}
+      <PopupQueryForm open={isQueryOpen} onOpenChange={setIsQueryOpen} />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
-import ContactCTA from "@/components/ui/contact-cta";
 import { useInView } from "react-intersection-observer";
 import {
   FiMail,
@@ -11,6 +10,7 @@ import {
   FiLinkedin,
   FiTwitter,
   FiInstagram,
+  FiSend,
   FiUsers,
   FiTrendingUp,
   FiAward,
@@ -21,6 +21,7 @@ import {
 import { BiBuilding, BiLeaf } from "react-icons/bi";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -51,6 +52,11 @@ const Footer = () => {
     },
   };
 
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Corporate contact:", email);
+    setEmail("");
+  };
 
   const corporateServices = [
     {
@@ -203,11 +209,31 @@ const Footer = () => {
               <h4 className="text-2xl font-semibold text-white mb-6">
                 Ready to Partner with Us?
               </h4>
-              <ContactCTA
-                whatsappMessage="Hello! I would like to partner with Kevasiya for corporate gifting."
-                tone="light"
-                className="justify-center"
-              />
+              <form
+                onSubmit={handleContactSubmit}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <div className="relative flex-1">
+                  <FiMail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your corporate email"
+                    className="w-full pl-12 pr-4 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-kevasiya-gold focus:border-transparent transition-all duration-300"
+                    required
+                  />
+                </div>
+                <motion.button
+                  type="submit"
+                  className="px-8 py-4 bg-kevasiya-gold text-white font-semibold rounded-lg hover:bg-kevasiya-gold/90 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiSend className="w-5 h-5" />
+                  Get Started
+                </motion.button>
+              </form>
             </motion.div>
           </div>
         </motion.div>
