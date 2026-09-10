@@ -16,7 +16,7 @@ const CATEGORY_CONTENT_OVERLAY = {
     faqs: [
       {
         question: "Do you accept bulk corporate gifting orders?",
-        answer: "Yes, we specialise in bulk orders for corporates. Reach out on WhatsApp or give us a call for custom pricing."
+        answer: "Yes, we specialise in bulk orders for corporates. Reach out via the Enquiry form or WhatsApp for custom pricing."
       },
       {
         question: "Can the hampers be branded with our company logo?",
@@ -241,7 +241,7 @@ export default async function CategoryPage({
                 </p>
                 <div className="bg-[#B38463]/10 border-l-4 border-[#B38463] p-5 rounded-r-lg">
                   <p className="text-[#B38463] font-medium text-base">
-                    Need tailor-made corporate hampers? Contact our sales team directly on WhatsApp or give us a call.
+                    Need tailor-made corporate hampers? Contact our sales team directly on WhatsApp or fill out the enquiry form.
                   </p>
                 </div>
               </div>

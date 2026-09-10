@@ -197,8 +197,8 @@ const TermsConditionsPage = () => {
             </h2>
             <p className="mb-6">
               Questions regarding these terms and conditions should be directed
-              to our support team. You can reach us on WhatsApp or by calling our
-              dedicated support line for assistance with any
+              to our support team. You can reach us through our contact form or
+              by calling our dedicated support line for assistance with any
               queries related to our services, orders, or policies.
             </p>
           </div>
