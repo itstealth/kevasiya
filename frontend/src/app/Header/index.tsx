@@ -97,7 +97,7 @@ export default function Nav() {
               })}
             </nav>
 
-            {/* Enquiry CTA + mobile burger */}
+            {/* Contact CTA + mobile burger */}
             <div className="flex items-center gap-3">
               {pathname !== "/contact" && (
                 <Link
@@ -108,7 +108,7 @@ export default function Nav() {
                       : "border-[#AE8F65] text-[#AE8F65] hover:bg-[#AE8F65] hover:text-white"
                   }`}
                 >
-                  Enquiry
+                  Our Address
                 </Link>
               )}
 
@@ -201,7 +201,7 @@ export default function Nav() {
                       href="/contact"
                       className="block text-center py-3 px-6 bg-[#3A5A40] text-white rounded-full text-sm font-medium tracking-wide hover:bg-[#2e4a33] transition-colors"
                     >
-                      Get in Touch
+                      Our Address
                     </Link>
                   </motion.div>
                 )}
