@@ -31,6 +31,8 @@ services:
     - DB_NAME=kevasiya_db
     - JWT_SECRET=${JWT_SECRET}
     - GOOGLE_APPS_SCRIPT_URL=${GOOGLE_APPS_SCRIPT_URL}
+    - UPLOADS_DIR=/app/uploads
+    - TEMP_UPLOADS_DIR=/app/uploads/.tmp
     healthcheck:
       interval: 30s
       retries: 3
@@ -44,7 +46,7 @@ services:
     networks:
     - kevasiya_network
     ports:
-    - 5006:5001
+    - 127.0.0.1:5006:5001
     read_only: true
     restart: unless-stopped
     security_opt:
@@ -123,7 +125,7 @@ services:
     networks:
     - kevasiya_network
     ports:
-    - 3016:5001
+    - 127.0.0.1:3016:5001
     read_only: true
     restart: unless-stopped
     security_opt:
@@ -152,8 +154,8 @@ services:
     - kevasiya_network
     - cms_blog_network
     ports:
-    - 8089:80
-    - 4439:443
+    - 127.0.0.1:8089:80
+    - 127.0.0.1:4439:443
     read_only: true
     restart: unless-stopped
     security_opt:
