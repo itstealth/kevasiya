@@ -49,3 +49,12 @@ export function eraseCookie(name: string): void {
 
   document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
+
+/**
+ * Builds the Authorization header for admin API calls from the stored token.
+ * Returns an empty object when no token is present, so callers can always spread it.
+ */
+export function authHeaders(): Record<string, string> {
+  const token = getCookie("adminToken");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}

@@ -54,6 +54,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
+import { authHeaders } from "@/lib/cookies";
 import {
   Dialog,
   DialogContent,
@@ -258,6 +259,7 @@ export default function SubmissionsPage() {
       try {
         const res = await fetch(`${apiUrl}/contact-submissions/${id}`, {
           method: "DELETE",
+          headers: authHeaders(),
         });
         if (res.ok) success += 1;
       } catch {
@@ -576,7 +578,10 @@ export default function SubmissionsPage() {
                                 if (!confirm("Delete this submission?")) return;
                                 const res = await fetch(
                                   `${apiUrl}/contact-submissions/${sub.id}`,
-                                  { method: "DELETE" }
+                                  {
+                                    method: "DELETE",
+                                    headers: authHeaders(),
+                                  }
                                 );
                                 if (res.ok) {
                                   toast.success("Submission deleted");

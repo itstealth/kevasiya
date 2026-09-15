@@ -505,7 +505,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-app.delete("/api/:entity/:id", async (req, res) => {
+app.delete("/api/:entity/:id", authenticateToken, async (req, res) => {
   try {
     const { entity, id } = req.params;
     if (
@@ -679,7 +679,7 @@ async function sendToGoogleSheets(data) {
   }
 }
 
-app.post("/api/categories", upload.single("image"), async (req, res) => {
+app.post("/api/categories", authenticateToken, upload.single("image"), async (req, res) => {
   try {
     const { name, description } = req.body;
     const slug = slugify(name);
@@ -700,7 +700,7 @@ app.post("/api/categories", upload.single("image"), async (req, res) => {
   }
 });
 
-app.put("/api/categories/:id", upload.single("image"), async (req, res) => {
+app.put("/api/categories/:id", authenticateToken, upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description } = req.body;
@@ -725,7 +725,7 @@ app.put("/api/categories/:id", upload.single("image"), async (req, res) => {
   }
 });
 
-app.post("/api/subcategories", upload.single("image"), async (req, res) => {
+app.post("/api/subcategories", authenticateToken, upload.single("image"), async (req, res) => {
   try {
     const { category_id, name, description } = req.body;
     const slug = slugify(name);
@@ -747,7 +747,7 @@ app.post("/api/subcategories", upload.single("image"), async (req, res) => {
   }
 });
 
-app.put("/api/subcategories/:id", upload.single("image"), async (req, res) => {
+app.put("/api/subcategories/:id", authenticateToken, upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
     const { category_id, name, description } = req.body;
@@ -999,68 +999,8 @@ const upsertProduct = async (req, res) => {
   }
 };
 
-app.post("/api/products", productUploadFields, upsertProduct);
-app.put("/api/products/:id", productUploadFields, upsertProduct);
-
-// --- Temporary script to organize images from /pictures folder ---
-const ORGANIZE_PICTURES_TOKEN = "kevasiya_organize_script_20240702";
-
-app.get("/organize-pictures", (req, res) => {
-  if (req.query.token !== ORGANIZE_PICTURES_TOKEN) {
-    return res
-      .status(403)
-      .send("Unauthorized. Please provide the correct token.");
-  }
-
-  const picturesDir = path.join(__dirname, "pictures");
-  const destBaseDir = path.join(UPLOADS_DIR, "products");
-  let output = "Starting picture organization process...<br>";
-
-  if (!fs.existsSync(picturesDir)) {
-    return res
-      .status(404)
-      .send(
-        "Error: The source folder `/pictures` does not exist in the backend root."
-      );
-  }
-
-  try {
-    const files = fs.readdirSync(picturesDir);
-    output += `Found ${files.length} items in /pictures.<br><br>`;
-
-    for (const file of files) {
-      const sourceFilePath = path.join(picturesDir, file);
-      const fileStats = fs.statSync(sourceFilePath);
-
-      if (fileStats.isFile()) {
-        const fileNameWithoutExt = path.parse(file).name;
-        const slug = slugify(fileNameWithoutExt);
-        const destFolderPath = path.join(destBaseDir, slug);
-        const destFilePath = path.join(destFolderPath, file);
-
-        try {
-          if (!fs.existsSync(destFolderPath)) {
-            fs.mkdirSync(destFolderPath, { recursive: true });
-            fs.chmodSync(destFolderPath, 0o777);
-            output += `✅ Created folder: ${slug}<br>`;
-          } else {
-            output += `✔️ Folder exists: ${slug}<br>`;
-          }
-
-          fs.copyFileSync(sourceFilePath, destFilePath);
-          output += `➡️ Copied ${file} to ${slug}/<br><br>`;
-        } catch (e) {
-          output += `❌ FAILED for ${file}: ${e.message}<br><br>`;
-        }
-      }
-    }
-    output += "Process finished.";
-    res.status(200).send(output);
-  } catch (err) {
-    console.error("[ORGANIZE_PICTURES_ERROR]", err);
-    res.status(500).send(`An error occurred: ${err.message}`);
-  }
-});
+app.post("/api/products", authenticateToken, productUploadFields, upsertProduct);
+app.put("/api/products/:id", authenticateToken, productUploadFields, upsertProduct);
 
 // --- INSTAGRAM TOKEN MANAGEMENT ---
 let cachedTokens = {
@@ -1113,7 +1053,7 @@ const refreshTokenIfNeeded = async (currentToken) => {
 };
 
 // Endpoint to manually exchange tokens
-app.post("/api/instagram-exchange-token", async (req, res) => {
+app.post("/api/instagram-exchange-token", authenticateToken, async (req, res) => {
   try {
     const { short_lived_token, account_type } = req.body;
 

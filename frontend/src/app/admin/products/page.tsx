@@ -49,6 +49,7 @@ import {
 import { getApiUrl } from "@/lib/utils";
 import { Product, Category, SubCategory } from "@/types/product";
 import { revalidateProducts } from "@/app/actions";
+import { authHeaders } from "@/lib/cookies";
 
 interface ApiProduct {
   id: number;
@@ -318,7 +319,11 @@ function ProductDialog({
 
     setIsSaving(true);
     try {
-      const res = await fetch(url, { method, body: formData });
+      const res = await fetch(url, {
+        method,
+        body: formData,
+        headers: authHeaders(),
+      });
       if (res.ok) {
         await revalidateProducts();
         onSave(); // Triggers the data refresh in the parent
@@ -828,6 +833,7 @@ export default function ProductsPage() {
       const apiUrl = getApiUrl();
       const res = await fetch(`${apiUrl}/products/${productId}`, {
         method: "DELETE",
+        headers: authHeaders(),
       });
       if (res.ok) {
         await revalidateProducts();

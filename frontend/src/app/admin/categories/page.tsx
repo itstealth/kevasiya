@@ -35,6 +35,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import { revalidateCategories } from "@/app/actions";
 import { getApiUrl } from "@/lib/utils";
+import { authHeaders } from "@/lib/cookies";
 
 // --- Type Definitions ---
 interface Category {
@@ -99,7 +100,11 @@ function CategoryDialog({
       ? `${apiUrl}/categories/${category.id}`
       : `${apiUrl}/categories`;
     const method = category ? "PUT" : "POST";
-    const res = await fetch(url, { method, body: formData });
+    const res = await fetch(url, {
+      method,
+      body: formData,
+      headers: authHeaders(),
+    });
 
     if (res.ok) {
       await revalidateCategories();
@@ -221,7 +226,11 @@ function SubCategoryDialog({
       ? `${apiUrl}/subcategories/${subcategory.id}`
       : `${apiUrl}/subcategories`;
     const method = subcategory ? "PUT" : "POST";
-    const res = await fetch(url, { method, body: formData });
+    const res = await fetch(url, {
+      method,
+      body: formData,
+      headers: authHeaders(),
+    });
 
     if (res.ok) {
       await revalidateCategories();
@@ -351,7 +360,10 @@ export default function CategoriesPage() {
       type === "category"
         ? `${apiUrl}/categories/${id}`
         : `${apiUrl}/subcategories/${id}`;
-    const res = await fetch(url, { method: "DELETE" });
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: authHeaders(),
+    });
 
     if (res.ok) {
       await revalidateCategories();
