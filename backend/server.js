@@ -40,7 +40,10 @@ const csrfProtection = csrf({ cookie: true });
 // --- DYNAMIC PATHS SETUP ---
 // The 'uploads' directory is now located within the backend directory.
 const UPLOADS_DIR = process.env.UPLOADS_DIR || path.join(__dirname, "uploads");
-const TEMP_UPLOADS_DIR = path.join(__dirname, "temp_uploads"); // Temp files can stay within the backend.
+// Kept on the same mount as UPLOADS_DIR: uploads are finalised with fs.renameSync,
+// which fails with EXDEV across two separate bind mounts.
+const TEMP_UPLOADS_DIR =
+  process.env.TEMP_UPLOADS_DIR || path.join(__dirname, "temp_uploads");
 
 // Ensure directories exist
 if (!fs.existsSync(UPLOADS_DIR)) {
