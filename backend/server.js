@@ -17,6 +17,18 @@ const PORT = process.env.PORT || 5001;
 const JWT_SECRET =
   process.env.JWT_SECRET || "your-secret-key-change-in-production";
 
+// The fallback above is a placeholder that ships in the repo, so anyone could
+// mint an admin token with it. Refuse to start rather than run on it.
+if (
+  process.env.NODE_ENV === "production" &&
+  JWT_SECRET === "your-secret-key-change-in-production"
+) {
+  console.error(
+    "[FATAL] JWT_SECRET is unset in production; refusing to start on the placeholder key."
+  );
+  process.exit(1);
+}
+
 // Rate Limiting
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
